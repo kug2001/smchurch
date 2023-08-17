@@ -5,7 +5,7 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        printWidth: 100,
+        printWidth: 80,
         trailingComma: 'none',
         tabWidth: 2,
         semi: true,
@@ -17,7 +17,12 @@ module.exports = {
     'unused-imports/no-unused-imports': 'error',
     'unused-imports/no-unused-vars': [
       'warn',
-      { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' }
+      {
+        vars: 'all',
+        varsIgnorePattern: '^_',
+        args: 'after-used',
+        argsIgnorePattern: '^_'
+      }
     ]
   },
   ignorePatterns: ['react-app-env.d.ts']

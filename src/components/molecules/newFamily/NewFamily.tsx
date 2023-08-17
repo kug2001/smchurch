@@ -1,9 +1,15 @@
 import React, { FC, useEffect, useState } from 'react';
-import { InnerSection, SectionContainer } from '@/components/molecules/share/share.styles';
-import { IntroMessage, IntroTitle } from '@/components/molecules/intro/Intro.styles';
+import {
+  InnerSection,
+  SectionContainer
+} from '@/components/molecules/share/share.styles';
+import {
+  IntroMessage,
+  IntroTitle
+} from '@/components/molecules/intro/Intro.styles';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import { useDatabase } from '@/provider/FirebaseProvider';
+import { useDatabase } from '@/hooks/firebase/useDatabase';
 
 export const NewFamily: FC = () => {
   // @ts-ignore
@@ -32,9 +38,10 @@ export const NewFamily: FC = () => {
         <div>
           <IntroTitle>새가족 안내</IntroTitle>
           <IntroMessage>
-            예수님의 사랑으로 여러분을 환영합니다. 제주서문교회의 동역자가 되시기를 원하시는 분은
-            새가족부의 안내를 받으실 수 있습니다. 새가족 등록 후 5주 간에 새가족공부를 마친 후
-            제주서문교회 공동체의 일원이 될 수 있습니다.
+            예수님의 사랑으로 여러분을 환영합니다. 제주서문교회의 동역자가
+            되시기를 원하시는 분은 새가족부의 안내를 받으실 수 있습니다. 새가족
+            등록 후 5주 간에 새가족공부를 마친 후 제주서문교회 공동체의 일원이
+            될 수 있습니다.
           </IntroMessage>
           <Swiper
             spaceBetween={50}

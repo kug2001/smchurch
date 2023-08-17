@@ -9,23 +9,35 @@ import {
   SubmitBtn,
   TextField,
   Title
-} from '@/app/admin/new-family/styles';
+} from '@/app/admin/styles';
 import { useRouter } from 'next/navigation';
-import { BaseSyntheticEvent } from 'react';
-import { useDatabase } from '@/provider/FirebaseProvider';
+import { BaseSyntheticEvent, useState } from 'react';
+import { useNewFamily } from '@/hooks/firebase/useNewFamily';
 
 export default function NewFamilyAddPage() {
   const route = useRouter();
-  const { addNewFamily } = useDatabase();
+  const { addNewFamily } = useNewFamily();
+  const [file, setFile] = useState(null);
   const handleNewFamily = () => route.back();
 
-  const handleOnSubmit = (e: BaseSyntheticEvent) => {
+  const handleFileChange = (e: BaseSyntheticEvent) => {
+    // console.log('imageFile', e.target.files[0]);
+    setFile(e.target.files[0]);
+  };
+
+  const handleOnSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
+    if (!file) return;
     const { value: name } = e.currentTarget.name;
     const { value: date } = e.currentTarget.date;
-    const { value: imgUrl } = e.currentTarget.imgUrl;
-    addNewFamily(name, imgUrl, date);
-    route.push('/admin/new-family');
+    const { files: imageFiles } = e.currentTarget.imageFile;
+
+    try {
+      await addNewFamily(name, imageFiles[0], date);
+      await route.push('/admin/new-family');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -45,8 +57,15 @@ export default function NewFamilyAddPage() {
           <TextField id="date" name="date" type="date" required={true} />
         </FieldBox>
         <FieldBox>
-          <Label htmlFor="imgUrl">이미지 Url</Label>
-          <TextField id="imgUrl" name="imgUrl" type="text" required={true} />
+          <Label htmlFor="imageFile">파일 업로드</Label>
+          <TextField
+            id="imageFile"
+            name="imageFile"
+            type="file"
+            onChange={handleFileChange}
+            accept="image/png, image/jpeg, image/jpg"
+            required={true}
+          />
         </FieldBox>
         <SubmitBtn>새신자 등록하기</SubmitBtn>
       </FormContainer>

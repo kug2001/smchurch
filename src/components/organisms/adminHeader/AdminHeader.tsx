@@ -2,8 +2,14 @@
 'use client';
 
 import React, { FC } from 'react';
-import { DocHeader, InnerHeader, LogoutBtn, Title, UserTitle } from './adminHeader.styled';
-import { useAuth } from '@/provider/FirebaseProvider';
+import {
+  DocHeader,
+  InnerHeader,
+  LogoutBtn,
+  Title,
+  UserTitle
+} from './adminHeader.styled';
+import { useAuth } from '@/hooks/firebase/useAuth';
 import { useAuthGuard } from '@/provider/GuardProvider';
 import { User } from '@firebase/auth';
 
@@ -35,7 +41,9 @@ export const AdminHeader: FC<AdminHeaderProps> = props => {
         </div>
         {userInfo && (
           <div>
-            <UserTitle>{`${userInfo.email?.split('@')[0]}관리자님 환영합니다!`}</UserTitle>
+            <UserTitle>{`${
+              userInfo.email?.split('@')[0]
+            }관리자님 환영합니다!`}</UserTitle>
             <LogoutBtn onClick={handleLogout}>로그아웃</LogoutBtn>
           </div>
         )}

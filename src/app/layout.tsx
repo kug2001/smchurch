@@ -25,9 +25,16 @@ export const metadata = {
   description: '제주서문교회 홈페이지'
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="ko">
+      <head>
+        <title>제주서문교회</title>
+      </head>
       <body className={inter.className}>
         <FirebaseProvider firebaseConfig={firebaseConfig}>
           {/*<QueryClientProvider client={queryClient}>*/}

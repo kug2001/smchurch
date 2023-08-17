@@ -1,5 +1,5 @@
 'use client';
-import { useDatabase } from '@/provider/FirebaseProvider';
+import { useNewFamily } from '@/hooks/firebase/useNewFamily';
 import useSWR from 'swr';
 import {
   AddBtn,
@@ -10,29 +10,33 @@ import {
   DeleteBtn,
   Description,
   InnerContainer,
+  NewFamilyIma,
   Title,
   UpdateBtn
-} from '@/app/admin/new-family/styles';
-import Image from 'next/image';
+} from '@/app/admin/styles';
 import { useRouter } from 'next/navigation';
+import { useCloudinary } from '@/hooks/cloudinary/useCloudinary';
+import React from 'react';
+import { LocalLoader } from '@/components/atoms/loader/LocalLoader';
 
-interface FamilyData {
+export interface FamilyData {
   idx: number;
-  imageUrl: string;
+  publicId: string;
   name: string;
   date: string;
 }
 
 export default function NewFamilyPage() {
-  const { getNewFamily, deleteNewFamily } = useDatabase();
+  const { getNewFamily, deleteNewFamily } = useNewFamily();
   const route = useRouter();
+  const { getCloudImg } = useCloudinary();
   const { data, isLoading } = useSWR('newFamily', getNewFamily);
 
   const handleAddNewFamily = () => route.push('/admin/new-family/add');
 
   const handleUpdateNewFamily = (query: FamilyData) => {
-    const { name, date, imageUrl, idx } = query;
-    const queryData = `?idx=${idx}&name=${name}&date=${date}&imageUrl=${imageUrl}`;
+    const { name, date, publicId, idx } = query;
+    const queryData = `?idx=${idx}&name=${name}&date=${date}&publicId=${publicId}`;
     route.push('/admin/new-family/update' + queryData);
   };
 
@@ -42,30 +46,38 @@ export default function NewFamilyPage() {
     });
   };
 
-  if (isLoading) return <div>Loading 중</div>;
   return (
-    <InnerContainer>
-      <Title>
-        새신자 추가
-        <AddBtn onClick={handleAddNewFamily}>새신자 등록</AddBtn>
-      </Title>
-      <Description>새신자 등록현황을 보여줍니다.</Description>
-      <CardContainer>
-        {data &&
-          data.map(({ idx, name, date, imageUrl }) => (
-            <CardBox key={idx}>
-              <Image src={'/'} alt={''} width={200} height={250} />
-              <CardTxt>이름 : {name}</CardTxt>
-              <CardTxt>등록 : {date}</CardTxt>
-              <BtnConsole>
-                <UpdateBtn onClick={() => handleUpdateNewFamily({ idx, name, date, imageUrl })}>
-                  업데이트
-                </UpdateBtn>
-                <DeleteBtn onClick={() => handleDeleteNewFamily(idx)}>삭제</DeleteBtn>
-              </BtnConsole>
-            </CardBox>
-          ))}
-      </CardContainer>
-    </InnerContainer>
+    <LocalLoader isLoading={isLoading}>
+      <InnerContainer>
+        <Title>
+          새신자 추가
+          <AddBtn onClick={handleAddNewFamily}>새신자 추가</AddBtn>
+        </Title>
+        <Description>새신자 현황에 대해 관리할 수 있습니다.</Description>
+        <CardContainer>
+          {data &&
+            data.map(({ idx, name, date, publicId }) => (
+              <CardBox key={idx}>
+                <div>{}</div>
+                <NewFamilyIma cldImg={getCloudImg(publicId)} />
+                <CardTxt>이름 : {name}</CardTxt>
+                <CardTxt>등록 : {date}</CardTxt>
+                <BtnConsole variant={'outlined'}>
+                  <UpdateBtn
+                    onClick={() =>
+                      handleUpdateNewFamily({ idx, name, date, publicId })
+                    }
+                  >
+                    {'업데이트'}
+                  </UpdateBtn>
+                  <DeleteBtn onClick={() => handleDeleteNewFamily(idx)}>
+                    {'삭제'}
+                  </DeleteBtn>
+                </BtnConsole>
+              </CardBox>
+            ))}
+        </CardContainer>
+      </InnerContainer>
+    </LocalLoader>
   );
 }

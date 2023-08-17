@@ -6,7 +6,11 @@ import { GuardProvider } from '@/provider/GuardProvider';
 import { Login } from '@/components/organisms/login/Login';
 import React from 'react';
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <GuardProvider loginPage={<Login />}>
       <Sidebar />

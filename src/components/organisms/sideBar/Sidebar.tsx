@@ -30,6 +30,11 @@ export const Sidebar: FC<SidebarProps> = props => {
       idx: 2,
       menuName: '게시판 관리',
       link: '/admin/board'
+    },
+    {
+      idx: 3,
+      menuName: '월별 사진 관리',
+      link: '/admin/board'
     }
   ];
 
@@ -39,7 +44,7 @@ export const Sidebar: FC<SidebarProps> = props => {
       <MenuList>
         {menuData.map(({ menuName, idx, link }) => (
           <li key={idx}>
-            <Link href={link}>{menuName}</Link>
+            <Link href={link}>{`${idx + 1}. ${menuName}`}</Link>
           </li>
         ))}
       </MenuList>

@@ -10,8 +10,9 @@ import React, {
   useState
 } from 'react';
 import { AdminHeader } from '@/components/organisms/adminHeader/AdminHeader';
-import { useAuth } from '@/provider/FirebaseProvider';
+import { useAuth } from '@/hooks/firebase/useAuth';
 import { User } from '@firebase/auth';
+import { GlobalLoader } from '@/components/atoms/loader/GlobalLoader';
 
 interface AuthContext {
   auth: boolean;
@@ -27,7 +28,9 @@ interface GuardProviderProps {
   loginPage: JSX.Element;
 }
 
-export const GuardProvider: FC<PropsWithChildren<GuardProviderProps>> = props => {
+export const GuardProvider: FC<
+  PropsWithChildren<GuardProviderProps>
+> = props => {
   const { children, loginPage } = props;
   const [auth, setAuth] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
@@ -52,14 +55,10 @@ export const GuardProvider: FC<PropsWithChildren<GuardProviderProps>> = props =>
 
   return (
     <authContext.Provider value={{ auth, setAuth }}>
-      {loading ? (
-        <>로딩중</>
-      ) : (
-        <>
-          <AdminHeader userInfo={userInfo} setUserInfo={setUserInfo} />
-          {!auth ? loginPage : children}
-        </>
-      )}
+      <GlobalLoader isLoading={loading}>
+        <AdminHeader userInfo={userInfo} setUserInfo={setUserInfo} />
+        {!auth ? loginPage : children}
+      </GlobalLoader>
     </authContext.Provider>
   );
 };

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Button } from '@mui/material';
 
 export const DocHeader = styled('header')`
   position: fixed;
@@ -15,24 +16,27 @@ export const InnerHeader = styled('div')`
   align-items: center;
   height: 80px;
   margin: auto;
-  //max-width: 1280px;
 `;
 
 export const Title = styled('h2')`
-  font-size: 21px;
+  font-size: 24px;
   font-weight: 700;
   color: #fff;
 `;
 
 export const UserTitle = styled('strong')`
+  font-weight: 600;
   color: #fff;
 `;
 
-export const LogoutBtn = styled('button')`
-  padding: 10px 10px;
+export const LogoutBtn = styled(Button)`
+  padding: 5px 10px;
   margin-left: 10px;
   border-radius: 8px;
-  border: 1px solid #000;
-  color: #000;
-  background: #fff;
+  //border: 1px solid #000;
+  color: #fff;
+  background: #9c27b099;
+  &:hover {
+    background: #9c27b0ee;
+  }
 `;

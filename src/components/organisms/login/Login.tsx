@@ -13,7 +13,7 @@ import {
   SubmitBtn,
   TextField
 } from '@/components/organisms/login/login.styles';
-import { useAuth } from '@/provider/FirebaseProvider';
+import { useAuth } from '@/hooks/firebase/useAuth';
 import { useAuthGuard } from '@/provider/GuardProvider';
 
 export const Login: FC = () => {
@@ -45,7 +45,13 @@ export const Login: FC = () => {
         <LoginForm onSubmit={e => handleOnSubmit(e)}>
           <InputBox>
             <Label htmlFor="id">E-mail</Label>
-            <TextField id="id" name="id" type="email" required={true} autoComplete="username" />
+            <TextField
+              id="id"
+              name="id"
+              type="email"
+              required={true}
+              autoComplete="username"
+            />
           </InputBox>
           <InputBox>
             <Label htmlFor="password">비밀번호</Label>

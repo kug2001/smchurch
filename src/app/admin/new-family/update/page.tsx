@@ -9,28 +9,26 @@ import {
   SubmitBtn,
   TextField,
   Title
-} from '@/app/admin/new-family/styles';
+} from '@/app/admin/styles';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useDatabase } from '@/provider/FirebaseProvider';
+import { useNewFamily } from '@/hooks/firebase/useNewFamily';
 import { BaseSyntheticEvent } from 'react';
 
 export default function NewFamilyUpdatePage() {
   const route = useRouter();
   const params = useSearchParams();
-  const { updateNewFamily } = useDatabase();
-
-  console.log('params', params.get('name'));
+  const { updateNewFamily } = useNewFamily();
 
   const handleNewFamily = () => route.back();
 
   const handleOnSubmit = (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const idx = params.get('idx');
-    if (!idx) return;
+    const publicId = params.get('publicId');
+    if (!(idx && publicId)) return;
     const { value: name } = e.currentTarget.name;
     const { value: date } = e.currentTarget.date;
-    const { value: imgUrl } = e.currentTarget.imgUrl;
-    updateNewFamily(idx, { name, imgUrl, date }).then(() => {
+    updateNewFamily(idx, { name, date, publicId }).then(() => {
       route.push('/admin/new-family');
     });
   };
@@ -41,7 +39,10 @@ export default function NewFamilyUpdatePage() {
         {params.get('name')} 새신자 수정
         <AddBtn onClick={handleNewFamily}>새신자 현황</AddBtn>
       </Title>
-      <Description>새신자 정보를 수정 합니다.</Description>
+      <Description>
+        새신자 정보를 수정 합니다. 다만 이미지는 업데이트가 불가하고, 새로
+        등록하셔야 합니다.
+      </Description>
       <FormContainer onSubmit={e => handleOnSubmit(e)}>
         <FieldBox>
           <Label htmlFor="name">이 름</Label>
@@ -61,16 +62,6 @@ export default function NewFamilyUpdatePage() {
             type="date"
             required={true}
             defaultValue={params.get('date') || ''}
-          />
-        </FieldBox>
-        <FieldBox>
-          <Label htmlFor="imgUrl">이미지 Url</Label>
-          <TextField
-            id="imgUrl"
-            name="imgUrl"
-            type="text"
-            required={true}
-            defaultValue={params.get('imageUrl') || ''}
           />
         </FieldBox>
         <SubmitBtn>정보 수정하기</SubmitBtn>

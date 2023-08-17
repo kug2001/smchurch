@@ -1,7 +1,6 @@
 /** @jsxImportSource @emotion/react */
 'use client';
 import { Intro } from '@/components/molecules/intro/Intro';
-import { Worker } from '@/components/molecules/worker/Worker';
 import styles from '../assets/styles/page.module.css';
 import { NewFamily } from '@/components/molecules/newFamily/NewFamily';
 import { Header } from '@/components/organisms/header/Header';
@@ -13,7 +12,6 @@ export default function Home() {
       <Header />
       <main className={styles.main}>
         <Intro />
-        <Worker />
         <NewFamily />
       </main>
       <Footer />

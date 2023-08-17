@@ -1,6 +1,10 @@
 import styled from '@emotion/styled';
 import Image from 'next/image';
 
+export const WorkerContainer = styled('div')`
+  //margin-bottom: 120px;
+`;
+
 export const WorkerTitle = styled('strong')`
   display: block;
   margin-bottom: 40px;
