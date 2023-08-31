@@ -1,9 +1,10 @@
-// import '../assets/styles/reset.css';
-// import '../assets/styles/global.css';
-import styles from '@/assets/styles/page.module.css';
-import { Sidebar } from '@/components/organisms/sideBar/Sidebar';
-import { GuardProvider } from '@/provider/GuardProvider';
-import { Login } from '@/components/organisms/login/Login';
+/** @jsxImportSource @emotion/react */
+'use client';
+
+import { Sidebar } from '@/components/layouts/sideBar/Sidebar';
+import { GuardProvider } from '@/components/provider/GuardProvider';
+import { Login } from '@/components/layouts/login/Login';
+import AdminMainLayout from '@/components/layouts/adminLayout/AdminLayout';
 import React from 'react';
 
 export default function AdminLayout({
@@ -14,7 +15,7 @@ export default function AdminLayout({
   return (
     <GuardProvider loginPage={<Login />}>
       <Sidebar />
-      <main className={styles.adminMain}>{children}</main>
+      <AdminMainLayout>{children}</AdminMainLayout>
     </GuardProvider>
   );
 }

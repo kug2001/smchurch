@@ -1,11 +1,10 @@
 import '../assets/styles/reset.css';
 import '../assets/styles/global.css';
 import { Inter } from 'next/font/google';
-import RootStyleRegistry from '@/provider/RootStyleRegistry';
-import { FirebaseProvider } from '@/provider/FirebaseProvider';
+import RootStyleRegistry from '@/components/provider/RootStyleRegistry';
+import { FirebaseProvider } from '@/components/provider/FirebaseProvider';
 import { FirebaseOptions } from 'firebase/app';
-// import { QueryClient } from 'react-query';
-// const queryClient = new QueryClient();
+import { ModalProvider } from '@/components/provider/ModalProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -20,11 +19,6 @@ const firebaseConfig: FirebaseOptions = {
   databaseURL: process.env.FIREBASE_DATABASE_URL
 };
 
-export const metadata = {
-  title: '제주서문교회',
-  description: '제주서문교회 홈페이지'
-};
-
 export default function RootLayout({
   children
 }: {
@@ -36,11 +30,11 @@ export default function RootLayout({
         <title>제주서문교회</title>
       </head>
       <body className={inter.className}>
-        <FirebaseProvider firebaseConfig={firebaseConfig}>
-          {/*<QueryClientProvider client={queryClient}>*/}
-          <RootStyleRegistry>{children}</RootStyleRegistry>
-          {/*</QueryClientProvider>*/}
-        </FirebaseProvider>
+        <ModalProvider>
+          <FirebaseProvider firebaseConfig={firebaseConfig}>
+            <RootStyleRegistry>{children}</RootStyleRegistry>
+          </FirebaseProvider>
+        </ModalProvider>
       </body>
     </html>
   );

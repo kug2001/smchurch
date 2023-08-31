@@ -15,12 +15,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 // import { useBoard } from '@/components/hooks/firebase/useBoard';
 import { BaseSyntheticEvent, useState } from 'react';
 import useSWR from 'swr';
-import { LocalLoader } from '@/components/atoms/loader/LocalLoader';
+import { LocalLoader } from '@/components/common/loader/LocalLoader';
 import { useBoard } from '@/hooks/firebase/useBoard';
 import { BoardData } from '@/app/admin/board/page';
 import { EditorState, RichUtils } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Editor } from '@/components/molecules/editor/Editor';
+import { Editor } from '@/components/block/editor/Editor';
 import '@/assets/styles/editor.css';
 
 export default function BoardUpdatePage() {

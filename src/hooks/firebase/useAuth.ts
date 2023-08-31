@@ -8,7 +8,10 @@ import {
   signOut
 } from 'firebase/auth';
 import { User } from '@firebase/auth';
-import { FirebaseContext, firebaseContext } from '@/provider/FirebaseProvider';
+import {
+  FirebaseContext,
+  firebaseContext
+} from '@/components/provider/FirebaseProvider';
 
 export const useAuth = () => {
   const { firebaseApp } = useContext<FirebaseContext>(firebaseContext);

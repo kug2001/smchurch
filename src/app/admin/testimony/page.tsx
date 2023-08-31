@@ -26,7 +26,7 @@ import {
   flexRender
 } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
-import { LocalLoader } from '@/components/atoms/loader/LocalLoader';
+import { LocalLoader } from '@/components/common/loader/LocalLoader';
 
 export interface TestimonyPerson {
   idx: string;

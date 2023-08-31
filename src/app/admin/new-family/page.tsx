@@ -17,7 +17,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { useCloudinary } from '@/hooks/cloudinary/useCloudinary';
 import React from 'react';
-import { LocalLoader } from '@/components/atoms/loader/LocalLoader';
+import { LocalLoader } from '@/components/common/loader/LocalLoader';
 
 export interface FamilyData {
   idx: number;

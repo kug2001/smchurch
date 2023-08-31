@@ -1,7 +1,10 @@
 import { useContext } from 'react';
 import { child, get, getDatabase, set } from 'firebase/database';
 import { ref as dbRef } from '@firebase/database';
-import { firebaseContext, FirebaseContext } from '@/provider/FirebaseProvider';
+import {
+  firebaseContext,
+  FirebaseContext
+} from '@/components/provider/FirebaseProvider';
 
 export const useDatabase = () => {
   const { firebaseApp } = useContext<FirebaseContext>(firebaseContext);

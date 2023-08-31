@@ -1,7 +1,10 @@
 'use client';
 
 import { useContext } from 'react';
-import { firebaseContext, FirebaseContext } from '@/provider/FirebaseProvider';
+import {
+  firebaseContext,
+  FirebaseContext
+} from '@/components/provider/FirebaseProvider';
 import { AdvancedImage } from '@cloudinary/react';
 export const useCloudinary = () => {
   const { cld } = useContext<FirebaseContext>(firebaseContext);
