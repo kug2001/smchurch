@@ -65,7 +65,7 @@ export const LayerBody = styled('div')`
   box-sizing: border-box;
   padding: 30px;
   min-height: 108px;
-  max-height: 600px;
+  max-height: 500px;
   font-size: 20px;
   font-weight: 500;
   line-height: 30px;
