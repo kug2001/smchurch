@@ -15,14 +15,22 @@ import {
   WayTitle
 } from '@/app/way/way.styles';
 import { MapModule } from '@/components/block/map/MapModule';
+import { useEffect, useState } from 'react';
 
 export default function WayPage() {
+  const [src, setSrc] = useState('');
+
+  useEffect(() => {
+    if (process.env.KAKAO_APP_KEY) {
+      setSrc(
+        `//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.KAKAO_APP_KEY}&libraries=services,clusterer&autoload=false`
+      );
+    }
+  }, []);
+
   return (
     <SectionContainer>
-      <Script
-        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8a30905ffe8271278bda8b442e9df9aa&libraries=services,clusterer&autoload=false"
-        strategy={'beforeInteractive'}
-      />
+      {src !== '' && <Script src={src} strategy={'beforeInteractive'} />}
       <InnerSection>
         <WayContainer>
           <WayTitle>오시는 길</WayTitle>

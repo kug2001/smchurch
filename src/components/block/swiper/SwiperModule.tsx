@@ -14,6 +14,7 @@ import {
   WrapSwiper
 } from '@/components/block/swiper/Swiper.styles';
 import useResize from '@/hooks/browser/useResize';
+import { reverse } from 'ramda';
 
 interface SwiperModuleProps {
   data: FamilyData[];
@@ -30,11 +31,12 @@ export const SwiperModule: FC<SwiperModuleProps> = props => {
         modules={[Navigation]}
         spaceBetween={50}
         slidesPerView={width > 1024 ? 3 : 1}
+        loop={true}
         navigation
         onSlideChange={() => console.log('slide change')}
         onSwiper={swiper => console.log(swiper)}
       >
-        {data.map(({ idx, name, date, publicId }) => (
+        {reverse(data).map(({ idx, name, date, publicId }) => (
           <SwiperSlide key={idx}>
             <InnerSwiperSlide>
               <NewFamilyImage cldImg={getCloudImg(publicId)} />
