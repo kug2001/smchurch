@@ -97,7 +97,7 @@ export default function Index() {
             style={{ minHeight: 'inherit' }}
           >
             <InnerSection>
-              <h3 className="screen_out">제주 서문교회 인사</h3>
+              <h3 className="screen_out">제주 서문교회 인사1</h3>
               <div>
                 <IntroTitle>제주서문교회에 오신 것을 환영합니다.</IntroTitle>
                 <Poem>
