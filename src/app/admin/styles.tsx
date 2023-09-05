@@ -1,5 +1,4 @@
 import { ButtonGroup, styled, Button, ButtonProps } from '@mui/material';
-import Image from 'next/image';
 import { AdvancedImage } from '@cloudinary/react';
 // import { Button } from '@/components/atoms/button/Button';
 // #9c27b0
@@ -102,6 +101,14 @@ export const TextField = styled('input')`
   border-radius: 8px;
 `;
 
+export const TextArea = styled('textarea')`
+  width: 800px;
+  height: 200px;
+  padding: 10px 10px;
+  border: 1px solid #999;
+  border-radius: 8px;
+`;
+
 export const SubmitBtn = styled('button')`
   padding: 20px 20px;
   font-size: 20px;
@@ -136,10 +143,10 @@ export const Th = styled('th')`
       width: 10%;
     }
     :nth-of-type(4) {
-      width: 60%;
+      width: 55%;
     }
     :nth-of-type(5) {
-      width: 10%;
+      width: 15%;
     }
   }
   &.board {
@@ -147,15 +154,12 @@ export const Th = styled('th')`
       width: 10%;
     }
     :nth-of-type(2) {
-      width: 10%;
-    }
-    :nth-of-type(3) {
       width: 50%;
     }
-    :nth-of-type(4) {
-      width: 20%;
+    :nth-of-type(3) {
+      width: 10%;
     }
-    :nth-of-type(5) {
+    :nth-of-type(4) {
       width: 10%;
     }
   }
@@ -167,7 +171,7 @@ export const Tr = styled('tr')`
   }
 `;
 
-export const FaceImage = styled(Image)`
+export const FaceImage = styled(AdvancedImage)`
   padding: 10px 10px;
 `;
 
@@ -185,10 +189,16 @@ export const Td = styled('td')`
   border: 1px solid #9c27b055;
   background: #9c27b010;
 
-  :nth-of-type(3) {
+  :nth-of-type(4) {
     text-align: left;
   }
   :nth-of-type(5) {
     padding: 10px 0;
+  }
+  &.testimony {
+    :nth-of-type(4) {
+      overflow: hidden;
+      height: 50px;
+    }
   }
 `;

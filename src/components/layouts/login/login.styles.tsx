@@ -10,7 +10,7 @@ export const LoginContainer = styled('div')`
 
 export const LoginTitle = styled('strong')`
   display: flex;
-  width: 100%;
+  width: 345px;
   justify-content: center;
   align-items: center;
   padding: 20px 0;

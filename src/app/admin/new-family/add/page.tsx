@@ -34,7 +34,7 @@ export default function NewFamilyAddPage() {
 
     try {
       await addNewFamily(name, imageFiles[0], date);
-      await route.push('/admin/new-family');
+      route.push('/admin/new-family');
     } catch (err) {
       console.log(err);
     }

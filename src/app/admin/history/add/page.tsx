@@ -7,35 +7,33 @@ import {
   InnerContainer,
   Label,
   SubmitBtn,
-  TextArea,
   TextField,
   Title
 } from '@/app/admin/styles';
 import { useRouter } from 'next/navigation';
 import { BaseSyntheticEvent, useState } from 'react';
-import { useTestimony } from '@/hooks/firebase/useTestimony';
+import { useHistoryImage } from '@/hooks/firebase/useHistoryImage';
 
-export default function TestimonyAddPage() {
+export default function NewFamilyAddPage() {
   const route = useRouter();
+  const { addHistoryImage } = useHistoryImage();
   const [file, setFile] = useState(null);
-  const { addTestimony } = useTestimony();
-  const handleTestimony = () => route.push('/admin/testimony');
+  const handleNewFamily = () => route.back();
 
   const handleFileChange = (e: BaseSyntheticEvent) => {
     // console.log('imageFile', e.target.files[0]);
     setFile(e.target.files[0]);
   };
+
   const handleOnSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
     if (!file) return;
-    const { value: name } = e.currentTarget.name;
-    const { value: job } = e.currentTarget.job;
-    const { value: testimony } = e.currentTarget.testimony;
+    const { value: title } = e.currentTarget.title;
     const { files: imageFiles } = e.currentTarget.imageFile;
 
     try {
-      await addTestimony(name, job, testimony, imageFiles[0]);
-      route.push('/admin/testimony');
+      await addHistoryImage(title, imageFiles[0]);
+      route.push('/admin/history');
     } catch (err) {
       console.log(err);
     }
@@ -44,22 +42,14 @@ export default function TestimonyAddPage() {
   return (
     <InnerContainer>
       <Title>
-        간증 추가
-        <AddBtn onClick={handleTestimony}>간증 등록 현황</AddBtn>
+        엘범에 사진을 추가
+        <AddBtn onClick={handleNewFamily}>엘범 현황</AddBtn>
       </Title>
-      <Description>성도 간증을 등록합니다.</Description>
+      <Description>엘범에 새로운 사진을 등록합니다.</Description>
       <FormContainer onSubmit={e => handleOnSubmit(e)}>
         <FieldBox>
-          <Label htmlFor="name">이 름</Label>
-          <TextField id="name" name="name" type="text" required={true} />
-        </FieldBox>
-        <FieldBox>
-          <Label htmlFor="job">직 분</Label>
-          <TextField id="job" name="job" type="text" required={true} />
-        </FieldBox>
-        <FieldBox>
-          <Label htmlFor="testimony">간 증</Label>
-          <TextArea id="testimony" name="testimony" required={true} />
+          <Label htmlFor="title">사진 타이틀</Label>
+          <TextField id="title" name="title" type="text" required={true} />
         </FieldBox>
         <FieldBox>
           <Label htmlFor="imageFile">파일 업로드</Label>
@@ -72,7 +62,7 @@ export default function TestimonyAddPage() {
             required={true}
           />
         </FieldBox>
-        <SubmitBtn>간증 등록하기</SubmitBtn>
+        <SubmitBtn>사진 등록하기</SubmitBtn>
       </FormContainer>
     </InnerContainer>
   );

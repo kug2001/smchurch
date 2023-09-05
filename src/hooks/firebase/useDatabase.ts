@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { child, get, getDatabase, set } from 'firebase/database';
+import { child, get, getDatabase, push, set } from 'firebase/database';
 import { ref as dbRef } from '@firebase/database';
 import {
   firebaseContext,
@@ -10,7 +10,14 @@ export const useDatabase = () => {
   const { firebaseApp } = useContext<FirebaseContext>(firebaseContext);
   const db = getDatabase(firebaseApp);
 
-  const writeDbData = (path: string, data: any) => {
+  const addDbData = (path: string, data: any) => {
+    const listRef = dbRef(db, path);
+    const newListRef = push(listRef);
+    const idx = newListRef.key;
+    return set(newListRef, { ...data, idx });
+  };
+
+  const updateDbData = (path: string, data: any) => {
     return set(dbRef(db, path), data);
   };
 
@@ -19,7 +26,8 @@ export const useDatabase = () => {
   };
 
   return {
-    writeDbData,
+    addDbData,
+    updateDbData,
     readDbData
   };
 };

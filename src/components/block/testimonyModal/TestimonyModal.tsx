@@ -13,13 +13,13 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 
 export const TestimonyModal: FC<ModalInfo> = props => {
-  const { name, htmlContent } = props;
+  const { name, job, htmlContent } = props;
   const { handleCloseModal } = useModal();
   return (
     <PopUpLayer>
       <InnerLayer>
         <LayerHead>
-          <TitPopUp>{`${name} 간증`}</TitPopUp>
+          <TitPopUp>{`${name} ${job} 간증`}</TitPopUp>
           <CloseBtn onClick={handleCloseModal}>
             <CloseIcon />
           </CloseBtn>

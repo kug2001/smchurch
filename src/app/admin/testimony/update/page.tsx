@@ -7,6 +7,7 @@ import {
   InnerContainer,
   Label,
   SubmitBtn,
+  TextArea,
   TextField,
   Title
 } from '@/app/admin/styles';
@@ -36,8 +37,12 @@ export default function TestimonyUpdatePage() {
     const { value: name } = e.currentTarget.name;
     const { value: job } = e.currentTarget.job;
     const { value: testimony } = e.currentTarget.testimony;
-    const { value: imageUrl } = e.currentTarget.imageUrl;
-    updateTestimony(idx, { name, job, testimony, imageUrl }).then(() => {
+    updateTestimony(idx, {
+      name,
+      job,
+      testimony,
+      publicId: data?.publicId || ''
+    }).then(() => {
       route.push('/admin/testimony');
     });
   };
@@ -76,22 +81,11 @@ export default function TestimonyUpdatePage() {
           </FieldBox>
           <FieldBox>
             <Label htmlFor="testimony">간증문</Label>
-            <TextField
+            <TextArea
               id="testimony"
               name="testimony"
-              type="text"
               required={true}
               defaultValue={data.testimony || ''}
-            />
-          </FieldBox>
-          <FieldBox>
-            <Label htmlFor="imageUrl">이미지 Url</Label>
-            <TextField
-              id="imageUrl"
-              name="imageUrl"
-              type="text"
-              required={true}
-              defaultValue={data.imageUrl || ''}
             />
           </FieldBox>
           <SubmitBtn>간증 수정하기</SubmitBtn>

@@ -8,6 +8,7 @@ export const DocHeader = styled('header')`
   padding: 0 40px;
   background: #000;
   border-bottom: 1px solid #eee;
+  z-index: 1000;
 `;
 
 export const InnerHeader = styled('div')`

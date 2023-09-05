@@ -27,13 +27,14 @@ import {
 } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
 import { LocalLoader } from '@/components/common/loader/LocalLoader';
+import { useCloudinary } from '@/hooks/cloudinary/useCloudinary';
 
 export interface TestimonyPerson {
   idx: string;
   name: string;
   job: string;
   testimony: string;
-  imageUrl: string;
+  publicId: string;
 }
 
 const columnHelper = createColumnHelper<TestimonyPerson>();
@@ -41,6 +42,7 @@ const columnHelper = createColumnHelper<TestimonyPerson>();
 export default function TestimonyPage() {
   const { getTestimony, deleteTestimony } = useTestimony();
   const route = useRouter();
+  const { getCloudImg } = useCloudinary();
   const { data: tableData, isLoading } = useSWR<TestimonyPerson[]>(
     'testimony',
     getTestimony
@@ -62,10 +64,15 @@ export default function TestimonyPage() {
   };
 
   const columns = [
-    columnHelper.accessor('imageUrl', {
+    columnHelper.accessor('publicId', {
       header: () => <span>사진</span>,
       cell: info => (
-        <FaceImage src={info.getValue()} alt={''} width={40} height={40} />
+        <FaceImage
+          //@ts-ignore
+          cldImg={getCloudImg(info.getValue())}
+          width={80}
+          height={80}
+        />
       )
     }),
     columnHelper.accessor('name', {
@@ -131,7 +138,7 @@ export default function TestimonyPage() {
               {table.getRowModel().rows.map(row => (
                 <Tr key={row.id}>
                   {row.getVisibleCells().map(cell => (
-                    <Td key={cell.id}>
+                    <Td key={cell.id} className={'testimony'}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()

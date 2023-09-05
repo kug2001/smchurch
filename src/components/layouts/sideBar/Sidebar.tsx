@@ -6,7 +6,6 @@ import {
   SidebarContainer,
   SidebarTitle
 } from '@/components/layouts/sideBar/sidebar.styles';
-import Link from 'next/link';
 
 interface SidebarProps {
   key?: any;
@@ -33,8 +32,8 @@ export const Sidebar: FC<SidebarProps> = props => {
     },
     {
       idx: 3,
-      menuName: '월별 사진 관리',
-      link: '/admin/board'
+      menuName: '엘범 사진 관리',
+      link: '/admin/history'
     }
   ];
 
@@ -44,7 +43,7 @@ export const Sidebar: FC<SidebarProps> = props => {
       <MenuList>
         {menuData.map(({ menuName, idx, link }) => (
           <li key={idx}>
-            <Link href={link}>{`${idx + 1}. ${menuName}`}</Link>
+            <a href={link}>{`${idx + 1}. ${menuName}`}</a>
           </li>
         ))}
       </MenuList>

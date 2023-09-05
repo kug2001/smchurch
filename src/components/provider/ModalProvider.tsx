@@ -20,7 +20,7 @@ interface ModalContext {
 
 export interface ModalInfo {
   name: string;
-  title: string;
+  job: string;
   htmlContent: string;
 }
 
@@ -29,7 +29,7 @@ const modalContext = createContext<ModalContext>({
   setIsOpen: () => {},
   modalInfo: {
     name: '',
-    title: '',
+    job: '',
     htmlContent: ''
   },
   setModalInfo: () => {}
@@ -40,7 +40,7 @@ export const ModalProvider: FC<PropsWithChildren> = props => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalInfo, setModalInfo] = useState<ModalInfo>({
     name: '',
-    title: '',
+    job: '',
     htmlContent: ''
   });
   return (
@@ -50,7 +50,7 @@ export const ModalProvider: FC<PropsWithChildren> = props => {
       {isOpen ? (
         <TestimonyModal
           name={modalInfo.name}
-          title={modalInfo.title}
+          job={modalInfo.job}
           htmlContent={modalInfo.htmlContent}
         />
       ) : (
@@ -71,7 +71,7 @@ export const useModal = () => {
     setIsOpen(true);
   };
   const handleCloseModal = () => {
-    setModalInfo({ title: '', htmlContent: '', name: '' });
+    setModalInfo({ job: '', htmlContent: '', name: '' });
     openScroll();
     setIsOpen(false);
   };
