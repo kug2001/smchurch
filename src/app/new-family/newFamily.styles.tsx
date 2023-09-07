@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { mq } from '@/components/block/share/share.styles';
 
 export const FamilyContainer = styled('div')`
-  padding: 0 40px;
+  padding: 0 20px;
 `;
 
 export const FamilyTitle = styled('strong')`

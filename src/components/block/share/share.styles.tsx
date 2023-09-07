@@ -49,6 +49,9 @@ export const InnerSection = styled('div')`
   width: 100%;
   z-index: 1;
   ${mq} {
-    padding: 60px 40px;
+    padding: 60px 20px;
+    &.new_family {
+      padding: 60px 0;
+    }
   }
 `;

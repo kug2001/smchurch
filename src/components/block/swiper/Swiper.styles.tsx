@@ -2,9 +2,7 @@ import { styled } from '@mui/material';
 import { AdvancedImage } from '@cloudinary/react';
 import { mq } from '@/components/block/share/share.styles';
 
-export const WrapSwiper = styled('div')`
-  margin-bottom: 80px;
-`;
+export const WrapSwiper = styled('div')``;
 export const InnerSwiperSlide = styled('div')`
   display: flex;
   flex-direction: column;
@@ -19,10 +17,10 @@ export const NewFamilyInfoBox = styled('div')`
 `;
 
 export const NewFamilyImage = styled(AdvancedImage)`
-  width: 300px;
-  ${mq} {
-    width: 400px;
-  }
+  width: 100%;
+  // ${mq} {
+  //   width: 200px;
+  // }
 `;
 
 export const InfoName = styled('span')`

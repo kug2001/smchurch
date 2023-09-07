@@ -26,7 +26,7 @@ export default function NewFamilyPage() {
   return (
     <LocalLoader isLoading={isLoading}>
       <SectionContainer bgColor={'#7d5d6022'}>
-        <InnerSection>
+        <InnerSection className={'new_family'}>
           <FamilyContainer>
             <h2 className="screen_out">새가족 안내</h2>
             <FamilyTitle>새가족 안내</FamilyTitle>
