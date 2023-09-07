@@ -1,11 +1,10 @@
-'use client';
 import { FC, useEffect, useRef } from 'react';
 import Editor from '@toast-ui/editor';
 import type { EditorCore } from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { editorOptions } from '@/components/block/editor/options'; // Editor's Style
+import { editorOptions } from '@/components/block/editor/options';
 
-interface BoardEditorProps {
+export interface BoardEditorProps {
   onChangeEditor: (mdContent: string) => void;
   initMdContent?: string;
 }
@@ -23,7 +22,7 @@ export const BoardEditor: FC<BoardEditorProps> = props => {
   };
 
   useEffect(() => {
-    if (editorRef.current) {
+    if (window && editorRef.current) {
       editorInstance.current = new Editor({
         ...editorOptions,
         el: editorRef.current as HTMLElement,

@@ -11,15 +11,22 @@ import {
   Title,
   WrapEditor
 } from '@/app/admin/styles';
-import { useRouter, useSearchParams } from 'next/navigation';
-// import { useBoard } from '@/components/hooks/firebase/useBoard';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { BaseSyntheticEvent, useState } from 'react';
 import useSWR from 'swr';
 import { LocalLoader } from '@/components/common/loader/LocalLoader';
 import { useBoard } from '@/hooks/firebase/useBoard';
 import { BoardData } from '@/app/admin/board/page';
-import { BoardEditor } from '@/components/block/editor/BoardEditor';
 import '@/assets/styles/editor.css';
+import dynamic from 'next/dynamic';
+import { BoardEditorProps } from '@/components/block/editor/BoardEditor';
+const BoardEditor = dynamic<BoardEditorProps>(
+  () =>
+    import('@/components/block/editor/BoardEditor').then(m => m.BoardEditor),
+  {
+    ssr: false
+  }
+);
 
 export default function BoardUpdatePage() {
   const route = useRouter();

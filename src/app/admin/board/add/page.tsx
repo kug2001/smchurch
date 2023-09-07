@@ -14,13 +14,29 @@ import {
 import { useRouter } from 'next/navigation';
 import { BaseSyntheticEvent, useState } from 'react';
 import { useBoard } from '@/hooks/firebase/useBoard';
-import { BoardEditor } from '@/components/block/editor/BoardEditor';
+import { BoardEditorProps } from '@/components/block/editor/BoardEditor';
+import dynamic from 'next/dynamic'; // Editor's Style
+const BoardEditor = dynamic<BoardEditorProps>(
+  () =>
+    import('@/components/block/editor/BoardEditor').then(m => m.BoardEditor),
+  {
+    ssr: false
+  }
+);
 
 export default function BoardAddPage() {
   const route = useRouter();
   const { addBoard } = useBoard();
   const [mdContent, setMdContent] = useState<string>('');
   const handleBoard = () => route.push('/admin/board');
+  // const [isEditorMount, setIsEditorMount] = useState(false);
+
+  // useEffect(() => {
+  //   if (!isEditorMount) {
+  //     setIsEditorMount(true);
+  //     return;
+  //   }
+  // }, [isEditorMount]);
 
   const handleOnSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -52,7 +68,7 @@ export default function BoardAddPage() {
           <TextField id="title" name="title" type="text" required={true} />
         </FieldBox>
         <FieldBox>
-          <Label htmlFor="contents">내 용</Label>
+          <Label>내 용</Label>
           <WrapEditor>
             <BoardEditor onChangeEditor={md => setMdContent(md)} />
           </WrapEditor>
