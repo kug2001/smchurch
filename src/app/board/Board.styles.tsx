@@ -12,6 +12,50 @@ export const BoardTitle = styled('strong')`
   color: #5d415d;
 `;
 
+export const DetailBoardTitle = styled('strong')`
+  display: block;
+  padding-bottom: 24px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+`;
+
+export const WrapDetailSubTitle = styled('div')`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #1a1a1a;
+  font-size: 16px;
+  color: #999;
+  span {
+    vertical-align: top;
+  }
+  span + span {
+    ::before {
+      display: inline-block;
+      position: relative;
+      top: 2px;
+      width: 2px;
+      height: 16px;
+      margin: 0 8px;
+      background: #999;
+      content: '';
+    }
+  }
+`;
+
+export const WrapDetailViewer = styled('div')`
+  min-height: 500px;
+`;
+
+export const WrapDetailBtn = styled('div')`
+  margin-top: 24px;
+  padding: 24px 0;
+  border-top: 1px solid #1a1a1a;
+`;
+
 export const TableContainer = styled('div')`
   margin-top: 20px;
   padding: 0 20px;

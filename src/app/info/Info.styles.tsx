@@ -42,7 +42,8 @@ export const TableHeader = styled('thead')`
     padding: 20px 15px;
     font-size: 20px;
     font-weight: 700;
-    border-bottom: 2px solid #eee;
+    border: 2px solid #eee;
+    //border-bottom: 2px solid #eee;
     ${mq} {
       font-size: 18px;
     }

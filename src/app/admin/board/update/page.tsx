@@ -18,9 +18,7 @@ import useSWR from 'swr';
 import { LocalLoader } from '@/components/common/loader/LocalLoader';
 import { useBoard } from '@/hooks/firebase/useBoard';
 import { BoardData } from '@/app/admin/board/page';
-import { EditorState, RichUtils } from 'draft-js';
-import 'draft-js/dist/Draft.css';
-import { Editor } from '@/components/block/editor/Editor';
+import { BoardEditor } from '@/components/block/editor/BoardEditor';
 import '@/assets/styles/editor.css';
 
 export default function BoardUpdatePage() {
@@ -28,39 +26,25 @@ export default function BoardUpdatePage() {
   const params = useSearchParams();
   const { updateBoard, getBoardByIdx } = useBoard();
   const userIdx = params.get('idx');
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
-  );
 
   const { data, isLoading } = useSWR<BoardData>(
     'getTestimonyByIdx',
     getBoardByIdx(userIdx)
   );
+
+  const [mdContent, setMdContent] = useState<string>('');
   // @ts-ignore
-  console.log('data', editorState.toJS().currentContent);
+  const handleNewFamily = () => route.push('/admin/board');
 
-  const handleNewFamily = () => route.push('/admin/testimony');
-
-  const handleOnSubmit = (e: BaseSyntheticEvent, idx: string) => {
+  const handleOnSubmit = async (e: BaseSyntheticEvent, idx: string) => {
     e.preventDefault();
     if (data === undefined) return;
     const { createDate } = data;
     const { value: title } = e.currentTarget.title;
-    // @ts-ignore
-    const contents = JSON.stringify(editorState.toJS().currentContent);
     const { value: category } = e.currentTarget.category;
-    updateBoard(idx, { title, contents, category, createDate }).then(() => {
-      route.push('/admin/board');
-    });
-  };
-
-  const handleKeyCommand = (command: string, editorState: EditorState) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      setEditorState(newState);
-      return 'handled';
-    }
-    return 'not-handled';
+    const contents = mdContent;
+    await updateBoard(idx, { title, contents, category, createDate });
+    route.push('/admin/board');
   };
 
   return (
@@ -68,13 +52,13 @@ export default function BoardUpdatePage() {
       {data && (
         <InnerContainer>
           <Title>
-            {`공지사항 수정`}
-            <AddBtn onClick={handleNewFamily}>공지사항 목록</AddBtn>
+            {`게시판 수정`}
+            <AddBtn onClick={handleNewFamily}>게시판 목록</AddBtn>
           </Title>
-          <Description>공지사항을 수정 합니다.</Description>
+          <Description>해당 게시판의 내용을 수정 합니다.</Description>
           <FormContainer onSubmit={e => handleOnSubmit(e, data.idx)}>
             <FieldBox>
-              <Label htmlFor="category">카테고리</Label>
+              <Label htmlFor="category">유형</Label>
               <TextField
                 id="category"
                 name="category"
@@ -95,20 +79,10 @@ export default function BoardUpdatePage() {
             </FieldBox>
             <FieldBox>
               <Label htmlFor="contents">내 용</Label>
-              <TextField
-                id="contents"
-                name="contents"
-                type="text"
-                required={true}
-                defaultValue={data.contents || ''}
-              />
-            </FieldBox>
-            <FieldBox>
-              <Label htmlFor="contents">내 용</Label>
               <WrapEditor>
-                <Editor
-                  editorState={editorState}
-                  setEditorState={setEditorState}
+                <BoardEditor
+                  onChangeEditor={md => setMdContent(md)}
+                  initMdContent={data.contents}
                 />
               </WrapEditor>
             </FieldBox>

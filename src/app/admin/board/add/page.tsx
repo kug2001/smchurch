@@ -8,23 +8,25 @@ import {
   Label,
   SubmitBtn,
   TextField,
-  Title
+  Title,
+  WrapEditor
 } from '@/app/admin/styles';
 import { useRouter } from 'next/navigation';
-import { BaseSyntheticEvent } from 'react';
+import { BaseSyntheticEvent, useState } from 'react';
 import { useBoard } from '@/hooks/firebase/useBoard';
+import { BoardEditor } from '@/components/block/editor/BoardEditor';
 
 export default function BoardAddPage() {
   const route = useRouter();
   const { addBoard } = useBoard();
+  const [mdContent, setMdContent] = useState<string>('');
   const handleBoard = () => route.push('/admin/board');
 
-  const handleOnSubmit = (e: BaseSyntheticEvent) => {
+  const handleOnSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
     const { value: category } = e.currentTarget.category;
     const { value: title } = e.currentTarget.title;
-    const { value: contents } = e.currentTarget.contents;
-    addBoard(category, title, contents);
+    await addBoard(category, title, mdContent);
     route.push('/admin/board');
   };
 
@@ -51,14 +53,10 @@ export default function BoardAddPage() {
         </FieldBox>
         <FieldBox>
           <Label htmlFor="contents">내 용</Label>
-          <TextField
-            id="contents"
-            name="contents"
-            type="text"
-            required={true}
-          />
+          <WrapEditor>
+            <BoardEditor onChangeEditor={md => setMdContent(md)} />
+          </WrapEditor>
         </FieldBox>
-
         <SubmitBtn>공지사항 등록하기</SubmitBtn>
       </FormContainer>
     </InnerContainer>

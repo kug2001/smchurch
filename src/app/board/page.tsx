@@ -40,8 +40,6 @@ export default function BoardPage() {
   const route = useRouter();
   const { data: tableData, isLoading } = useSWR('board', getBoard);
 
-  console.log(tableData);
-
   const columns = [
     columnHelper.accessor('category', {
       header: () => <span>유형</span>,
