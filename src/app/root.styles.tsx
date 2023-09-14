@@ -2,16 +2,43 @@ import styled from '@emotion/styled';
 import { Tooltip } from '@mui/material';
 import { mq } from '@/components/block/share/share.styles';
 import { AdvancedImage } from '@cloudinary/react';
+import { motion } from 'framer-motion';
 
 export const WrapPeopleContainer = styled('div')`
   display: flex;
   justify-content: center;
+  margin: 80px 0;
 `;
-export const PeopleContainer = styled('ul')`
+
+export const CoverContainer = styled('div')`
+  position: relative;
+  width: 100%;
+  height: 100vh;
+`;
+
+export const GoToTestimonyBtn = styled('button')`
+  display: block;
+  position: relative;
+  top: 80%;
+  left: 50%;
+  width: 100px;
+  height: 50px;
+  font-size: 18px;
+  color: #1a1a1a;
+  font-weight: 700;
+  border: none;
+  border-radius: 16px;
+  background: #ffffffdd;
+  transform: translate(-50%, -50%);
+  &:hover {
+    background: #ffffff;
+  }
+`;
+export const PeopleContainer = styled(motion.ul)`
   display: grid;
   grid-template-columns: repeat(10, 100px);
-  grid-column-gap: 2px;
-  grid-row-gap: 2px;
+  grid-column-gap: 3px;
+  grid-row-gap: 3px;
   place-items: center;
   @media (max-width: 1128px) {
     grid-template-columns: repeat(7, 100px);
@@ -27,45 +54,56 @@ export const PeopleContainer = styled('ul')`
 export const TitIntroPeople = styled('h3')`
   text-align: center;
   margin: 0 0 40px;
-  font-size: 24px;
+  font-size: 40px;
+  color: #5d415d;
   font-weight: 600;
 `;
 
 export const PeopleTooltip = styled(Tooltip)``;
-
-// export const PeopleImg = styled(Image)`
-//   cursor: pointer;
-//   ${mq} {
-//     width: 80px;
-//     height: 80px;
-//   }
-// `;
-
 export const PeopleImg = styled(AdvancedImage)`
-  cursor: pointer;
+  border-radius: 4px;
+  //border: 1px solid #eee;
   ${mq} {
     width: 50px;
     height: 50px;
   }
 `;
 
-export const IntroTitle = styled('strong')`
-  font-size: 70px;
+export const PeopleBtn = styled(motion.button)`
+  display: block;
+  padding: 0;
+  border: 0 none;
+  background-color: transparent;
+  border-radius: 4px;
+  font-size: 0;
+`;
+
+export const IntroTitle = styled(motion.strong)`
+  display: block;
+  font-size: 40px;
   font-weight: 700;
+  text-align: center;
   color: #fff;
 `;
 
+export const WrapPoem = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+`;
+
 export const Poem = styled('p')`
-  margin: 70px 30px;
-  font-size: 22px;
+  padding: 70px 50px;
+  font-size: 16px;
+  font-weight: 500;
   font-style: italic;
   line-height: 30px;
   color: #fff;
 `;
 
-export const IntroMessage = styled('p')`
+export const IntroMessage = styled(motion.p)`
   font-size: 22px;
-  font-style: italic;
+  text-align: center;
+  //font-style: italic;
   line-height: 30px;
   color: #fff;
 `;

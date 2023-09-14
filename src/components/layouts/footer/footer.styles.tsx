@@ -1,29 +1,46 @@
 import styled from '@emotion/styled';
 
 export const DocFooter = styled('footer')`
-  background-color: #9d9d9d;
+  background-color: #ddd;
 `;
 
 export const InnerFooter = styled('div')`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
+  //display: flex;
+  //flex-direction: column;
+  //justify-content: center;
+  //align-items: center;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
 `;
 
 export const Address = styled('address')`
-  font-size: 12px;
-  color: #fff;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
 `;
 
-export const TelePhone = styled('p')`
-  font-size: 12px;
-  margin: 0 0 5px;
-  color: #fff;
+export const PhoneNumber = styled('p')`
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  margin-left: 10px;
+  color: #333;
+  &::before {
+    display: inline-block;
+    position: relative;
+    width: 2px;
+    top: 1px;
+    height: 14px;
+    margin-right: 8px;
+    background: #333;
+    content: '';
+  }
 `;
 
 export const Copyright = styled('p')`
-  font-size: 12px;
-  color: #fff;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
 `;

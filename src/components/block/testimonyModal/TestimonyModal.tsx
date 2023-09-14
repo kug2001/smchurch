@@ -20,7 +20,12 @@ export const TestimonyModal: FC<ModalInfo> = props => {
       <InnerLayer>
         <LayerHead>
           <TitPopUp>{`${name} ${job} 간증`}</TitPopUp>
-          <CloseBtn onClick={handleCloseModal}>
+          <CloseBtn
+            onClick={e => {
+              e.preventDefault();
+              handleCloseModal();
+            }}
+          >
             <CloseIcon />
           </CloseBtn>
         </LayerHead>

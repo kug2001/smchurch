@@ -6,8 +6,8 @@ import {
   DocFooter,
   InnerFooter,
   Address,
-  TelePhone,
-  Copyright
+  Copyright,
+  PhoneNumber
 } from './footer.styles';
 
 export const Footer: FC = () => {
@@ -15,7 +15,9 @@ export const Footer: FC = () => {
     <DocFooter>
       <InnerFooter>
         <Address>주소 : 제주시 용문로 17길 23-6</Address>
-        <TelePhone>Tel : 712-5593 Fax : 712-5592 목사관 : 712-5591</TelePhone>
+        <PhoneNumber>Tel : (064)712-5593</PhoneNumber>
+        <PhoneNumber>Fax : (064)712-5592</PhoneNumber>
+        <PhoneNumber>목사관 : (064)712-5591</PhoneNumber>
         <Copyright>
           Copyright © 2023 제주서문교회 All Rights Reserved.
         </Copyright>

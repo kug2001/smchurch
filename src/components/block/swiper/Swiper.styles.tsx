@@ -18,6 +18,8 @@ export const NewFamilyInfoBox = styled('div')`
 
 export const NewFamilyImage = styled(AdvancedImage)`
   width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ddd;
   // ${mq} {
   //   width: 200px;
   // }
