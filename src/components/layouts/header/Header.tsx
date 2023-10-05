@@ -35,11 +35,11 @@ export const Header: FC = () => {
       menuName: '공동체 소식',
       linkUrl: '/board'
     },
-    // {
-    //   idx: 3,
-    //   menuName: '공동체 엘범',
-    //   linkUrl: '/album'
-    // },
+    {
+      idx: 3,
+      menuName: '공동체 엘범',
+      linkUrl: '/album'
+    },
     {
       idx: 4,
       menuName: '오시는 길',

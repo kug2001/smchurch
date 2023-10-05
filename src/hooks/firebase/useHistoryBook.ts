@@ -40,12 +40,16 @@ export const useHistoryBook = () => {
 
   const addHistoryBook = async (title: string, imgList: any[]) => {
     const id = Date.now();
+    const dateInstance = new Date(id);
+    const year = dateInstance.getFullYear();
+    const month = dateInstance.getMonth() + 1;
+    const day = dateInstance.getDate();
     const path = 'history';
-
+    const createDate = `${year}-${month}-${day}`;
     return await addDbData(path, {
       title,
       imgList,
-      createDate: id
+      createDate
     });
   };
 
