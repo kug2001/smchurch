@@ -13,7 +13,6 @@ export const FamilyTitle = styled('strong')`
   border-bottom: 3px solid #5d4251;
   font-size: 46px;
   font-weight: 700;
-  text-align: center;
   color: #5d4251;
   ${mq} {
     font-size: 30px;
@@ -24,7 +23,6 @@ export const FamilyMsg = styled('p')`
   display: block;
   margin-bottom: 40px;
   font-size: 18px;
-  text-align: center;
   color: #5d4251;
   line-height: 32px;
   ${mq} {
