@@ -13,7 +13,10 @@ export const WrapPeopleContainer = styled('div')`
 export const CoverContainer = styled('div')`
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 90vh;
+  ${mq} {
+    height: 24vh;
+  }
 `;
 
 export const GoToTestimonyBtn = styled('button')`
@@ -21,7 +24,7 @@ export const GoToTestimonyBtn = styled('button')`
   position: relative;
   top: 80%;
   left: 50%;
-  width: 100px;
+  width: 200px;
   height: 50px;
   font-size: 18px;
   color: #1a1a1a;
@@ -30,6 +33,11 @@ export const GoToTestimonyBtn = styled('button')`
   border-radius: 16px;
   background: #ffffffdd;
   transform: translate(-50%, -50%);
+  ${mq} {
+    width: 100px;
+    height: 30px;
+    font-size: 14px;
+  }
   &:hover {
     background: #ffffff;
   }
@@ -57,6 +65,9 @@ export const TitIntroPeople = styled('h3')`
   font-size: 40px;
   color: #5d415d;
   font-weight: 600;
+  ${mq} {
+    font-size: 20px;
+  }
 `;
 
 export const PeopleTooltip = styled(Tooltip)``;
@@ -84,6 +95,9 @@ export const IntroTitle = styled(motion.strong)`
   font-weight: 700;
   text-align: center;
   color: #fff;
+  ${mq} {
+    font-size: 24px;
+  }
 `;
 
 export const WrapPoem = styled(motion.div)`
@@ -98,12 +112,19 @@ export const Poem = styled('p')`
   font-style: italic;
   line-height: 30px;
   color: #fff;
+  ${mq} {
+    font-size: 13px;
+  }
 `;
 
 export const IntroMessage = styled(motion.p)`
   font-size: 22px;
   text-align: center;
   //font-style: italic;
-  line-height: 30px;
+  line-height: 35px;
   color: #fff;
+  ${mq} {
+    font-size: 14px;
+    line-height: 28px;
+  }
 `;

@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import { mq } from '@/components/block/share/share.styles';
+import { SwiperSlide } from 'swiper/react';
 
-export const FamilyContainer = styled('div')`
-  padding: 0 20px;
+export const AlbumContainer = styled('div')`
+  //padding: 0 20px;
 `;
 
-export const FamilyTitle = styled('strong')`
+export const AlbumTitle = styled('strong')`
   display: block;
   //width: 100%;
   margin-bottom: 60px;
@@ -19,7 +20,7 @@ export const FamilyTitle = styled('strong')`
   }
 `;
 
-export const FamilyMsg = styled('p')`
+export const AlbumMsg = styled('p')`
   display: block;
   margin-bottom: 40px;
   font-size: 18px;
@@ -31,11 +32,27 @@ export const FamilyMsg = styled('p')`
   }
 `;
 
-export const Br = styled('br')`
-  &.mo {
-    display: none;
-    ${mq} {
-      display: block;
-    }
-  }
+export const AlbumSwiperContainer = styled('div')``;
+
+export const ViewSwiper = styled('div')`
+  padding: 30px 0;
+  border-radius: 8px 8px 0 0;
+  background-color: #d2d2d2;
+`;
+
+export const ThumbsSwiper = styled('div')`
+  padding: 30px 20px;
+  border-top: 2px solid #fff;
+  border-radius: 0 0 8px 8px;
+  background-color: #d2d2d2;
+`;
+
+export const WrapViewSlide = styled(SwiperSlide)`
+  display: flex;
+  justify-content: center;
+`;
+
+export const WrapThumbsSlide = styled(SwiperSlide)`
+  display: flex;
+  justify-content: center;
 `;

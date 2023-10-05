@@ -48,7 +48,7 @@ export const MenuList = styled('ul')`
   justify-content: space-between;
   > li {
     padding: 0 10px;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 16px;
     color: #5d4251;
   }

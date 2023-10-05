@@ -1,12 +1,15 @@
 import '../assets/styles/reset.css';
 import '../assets/styles/global.css';
-import { Inter } from 'next/font/google';
+import { Nanum_Gothic } from 'next/font/google';
 import RootStyleRegistry from '@/components/provider/RootStyleRegistry';
 import { FirebaseProvider } from '@/components/provider/FirebaseProvider';
 import { FirebaseOptions } from 'firebase/app';
 import { ModalProvider } from '@/components/provider/ModalProvider';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Nanum_Gothic({
+  weight: ['400', '700', '800'],
+  subsets: ['latin']
+});
 
 const firebaseConfig: FirebaseOptions = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -28,6 +31,7 @@ export default function RootLayout({
     <html lang="ko">
       <head>
         <title>제주서문교회</title>
+        <meta name="format-detection" content="telephone=no" />
       </head>
       <body className={inter.className}>
         <ModalProvider>

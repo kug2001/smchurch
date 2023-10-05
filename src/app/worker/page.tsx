@@ -34,7 +34,7 @@ export default function WorkPage() {
 
   const workerList = [
     { idx: 0, job: '원로목사', workers: ['강기옥'] },
-    { idx: 1, job: '교육목사', workers: ['장용도'] },
+    // { idx: 1, job: '교육목사', workers: ['장용도'] },
     { idx: 2, job: '원로장로', workers: ['김택신'] },
     { idx: 3, job: '은퇴장로', workers: ['오경택', '최신경'] },
     {

@@ -2,15 +2,17 @@ import { pipe, values } from 'ramda';
 import { useDatabase } from '@/hooks/firebase/useDatabase';
 
 export const useBoard = () => {
-  const { addDbData, updateDbData, readDbData } = useDatabase();
+  const { addDbData, updateDbData, readDbData, paginationDbData } =
+    useDatabase();
 
   const addBoard = (category: string, title: string, contents: string) => {
     const id = Date.now();
     const dateInstance = new Date(id);
     const path = 'board';
-    const year = dateInstance.getUTCFullYear();
-    const month = dateInstance.getUTCMonth();
-    const day = dateInstance.getUTCDay();
+    const year = dateInstance.getFullYear();
+    const month = dateInstance.getMonth() + 1;
+    const day = dateInstance.getDate();
+
     const createDate = `${year}-${month}-${day}`;
     return addDbData(path, {
       category,
@@ -23,7 +25,14 @@ export const useBoard = () => {
   const getBoard = async () => {
     const snapshot = await readDbData('/board');
     const data = await snapshot.val();
-    return pipe(values)(data);
+    // @ts-ignore
+    return pipe(values, list => list.reverse())(data);
+  };
+
+  const getBoardPagination = async (id: string, pagePerItem: number) => {
+    const snapshot = await paginationDbData('/board', id, pagePerItem);
+    const data = await snapshot.val();
+    console.log(values(data));
   };
 
   const getBoardByIdx = (idx: string | null) => async () => {
@@ -65,6 +74,7 @@ export const useBoard = () => {
     getBoard,
     deleteBoard,
     updateBoard,
-    getBoardByIdx
+    getBoardByIdx,
+    getBoardPagination
   };
 };

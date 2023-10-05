@@ -11,61 +11,68 @@ import {
   Title
 } from '@/app/admin/styles';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useNewFamily } from '@/hooks/firebase/useNewFamily';
 import { BaseSyntheticEvent } from 'react';
+import { useHistoryBook } from '@/hooks/firebase/useHistoryBook';
+import useSWR from 'swr';
+import { LocalLoader } from '@/components/common/loader/LocalLoader';
+import { BookImg, BookImgContainer } from '@/app/admin/history/styles';
+import { useCloudinary } from '@/hooks/cloudinary/useCloudinary';
 
 export default function NewFamilyUpdatePage() {
   const route = useRouter();
   const params = useSearchParams();
-  const { updateNewFamily } = useNewFamily();
+  const id = params.get('id');
+  const { updateHistoryBook, getHistoryById } = useHistoryBook();
+  const { getCloudImg } = useCloudinary();
+  const { data, isLoading } = useSWR('historyById', getHistoryById(id));
 
-  const handleNewFamily = () => route.back();
+  const handleGoHistory = () => route.push('/admin/history');
 
-  const handleOnSubmit = (e: BaseSyntheticEvent) => {
+  const handleOnSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    const idx = params.get('idx');
-    const publicId = params.get('publicId');
-    if (!(idx && publicId)) return;
-    const { value: name } = e.currentTarget.name;
-    const { value: date } = e.currentTarget.date;
-    updateNewFamily(idx, { name, date, publicId }).then(() => {
-      route.push('/admin/new-family');
-    });
+    const { value: title } = e.currentTarget.title;
+    const { createDate, imgList } = data;
+    const id = params.get('id');
+    await updateHistoryBook(title, imgList, createDate, id);
+    route.push('/admin/history');
   };
 
   return (
-    <InnerContainer>
-      <Title>
-        {params.get('name')} 새신자 수정
-        <AddBtn onClick={handleNewFamily}>새신자 현황</AddBtn>
-      </Title>
-      <Description>
-        새신자 정보를 수정 합니다. 다만 이미지는 업데이트가 불가하고, 새로
-        등록하셔야 합니다.
-      </Description>
-      <FormContainer onSubmit={e => handleOnSubmit(e)}>
-        <FieldBox>
-          <Label htmlFor="name">이 름</Label>
-          <TextField
-            id="name"
-            name="name"
-            type="text"
-            required={true}
-            defaultValue={params.get('name') || ''}
-          />
-        </FieldBox>
-        <FieldBox>
-          <Label htmlFor="date">날 짜</Label>
-          <TextField
-            id="date"
-            name="date"
-            type="date"
-            required={true}
-            defaultValue={params.get('date') || ''}
-          />
-        </FieldBox>
-        <SubmitBtn>정보 수정하기</SubmitBtn>
-      </FormContainer>
-    </InnerContainer>
+    <LocalLoader isLoading={isLoading}>
+      <InnerContainer>
+        <Title>
+          {params.get('name')} 엘범 수정
+          <AddBtn onClick={handleGoHistory}>앨범 목록</AddBtn>
+        </Title>
+        <Description>
+          엘범을 수정합니다. 다만 이미지는 수정할 수 없습니다.(추후 업데이트
+          예정)
+        </Description>
+        <BookImgContainer>
+          {data &&
+            data.imgList?.map((item: any, index: any) => (
+              <BookImg
+                key={index}
+                cldImg={getCloudImg(item.public_id)}
+                width={200}
+                height={150}
+              />
+            ))}
+        </BookImgContainer>
+        <FormContainer onSubmit={e => handleOnSubmit(e)}>
+          <FieldBox>
+            <Label htmlFor="title">엘범 이름</Label>
+            <TextField
+              id="title"
+              name="title"
+              type="text"
+              required={true}
+              defaultValue={data?.title || ''}
+            />
+          </FieldBox>
+          <SubmitBtn>수정하기</SubmitBtn>
+        </FormContainer>
+      </InnerContainer>
+    </LocalLoader>
   );
 }

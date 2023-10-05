@@ -32,14 +32,14 @@ export const Header: FC = () => {
     },
     {
       idx: 2,
-      menuName: '새가족 안내',
-      linkUrl: '/new-family'
-    },
-    {
-      idx: 3,
       menuName: '공동체 소식',
       linkUrl: '/board'
     },
+    // {
+    //   idx: 3,
+    //   menuName: '공동체 엘범',
+    //   linkUrl: '/album'
+    // },
     {
       idx: 4,
       menuName: '오시는 길',

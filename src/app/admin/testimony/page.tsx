@@ -48,8 +48,6 @@ export default function TestimonyPage() {
     getTestimony
   );
 
-  console.log(tableData);
-
   const handleAddTestimony = () => route.push('/admin/testimony/add');
 
   const handleDeleteTestimony = (idx: string) => {

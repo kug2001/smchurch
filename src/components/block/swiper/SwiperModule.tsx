@@ -32,26 +32,8 @@ export const SwiperModule: FC<SwiperModuleProps> = props => {
         centeredSlides={true}
         spaceBetween={50}
         slidesPerView={width > 786 ? 3 : 1}
-        // centeredSlides={false}
         loop={true}
         navigation
-        // breakpoints={{
-        //   0: {
-        //     /* when window >=0px - webflow mobile landscape/portriat */
-        //     slidesPerView: 1,
-        //     spaceBetween: 10,
-        //     slidesOffsetBefore: 0,
-        //     direction: 'vertical'
-        //   },
-        //   767: {
-        //     slidesPerView: 3,
-        //     spaceBetween: 30,
-        //     slidesOffsetBefore: 0,
-        //     direction: 'vertical'
-        //   }
-        // }}
-        // onSlideChange={() => console.log('slide change')}
-        // onSwiper={swiper => console.log(swiper)}
       >
         {reverse(data).map(({ idx, name, date, publicId }) => (
           <SwiperSlide key={idx}>

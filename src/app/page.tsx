@@ -77,13 +77,14 @@ export default function Index() {
         <h2 className="screen_out">메인페이지</h2>
         <LocalLoader isLoading={isLoading}>
           <SectionContainer
+            className={'cover'}
             bgUrl={'/img/cover_bg.jpeg'}
             bgColor={'#ffffff11'}
             style={{ minHeight: 'inherit' }}
           >
             <CoverContainer>
               <GoToTestimonyBtn onClick={handleGoToTestimony}>
-                CLICK
+                간증보기
               </GoToTestimonyBtn>
             </CoverContainer>
           </SectionContainer>
@@ -93,9 +94,7 @@ export default function Index() {
             ref={testimonyRef}
           >
             <InnerSection>
-              <TitIntroPeople>
-                제주 서문교회 사람들을 소개합니다.
-              </TitIntroPeople>
+              <TitIntroPeople>제주 서문교회 사람을 소개합니다.</TitIntroPeople>
               <WrapPeopleContainer>
                 <PeopleContainer
                   variants={container}
@@ -134,24 +133,14 @@ export default function Index() {
             </InnerSection>
           </SectionContainer>
           <SectionContainer
-            bgUrl={'/img/intro_bg.jpg'}
+            bgUrl={'/img/intro_bg.jpeg'}
             bgColor={'#000000aa'}
             style={{ minHeight: 'inherit' }}
           >
             <InnerSection>
               <h3 className="screen_out">제주 서문교회 인사</h3>
-              <IntroTitle
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                제주서문교회에 오신 것을 환영합니다.
-              </IntroTitle>
-              <WrapPoem
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-              >
+              <IntroTitle>제주서문교회에 오신 것을 환영합니다.</IntroTitle>
+              <WrapPoem>
                 <Poem>
                   사람이 온다는 건 <br />
                   실은 어마어마한 일이다. <br />
@@ -170,17 +159,14 @@ export default function Index() {
                   필경 환대가 될 것이다.
                 </Poem>
               </WrapPoem>
-              <IntroMessage
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 1.5 }}
-              >
+              <IntroMessage>
                 정현종 님의 ‘방문객’이란 시입니다. <br />
                 제주서문교회는 예수님께서 한 영혼을 천하보다 귀하게 여기신
                 것처럼
                 <br /> 한 생명을 예수님의 마음으로 환대하며 섬기는
                 신앙공동체입니다. <br />이 사명을 위해 가르치고 치유하며
-                전파하는 사역의 동역자로 여러분을 초대합니다.
+                전파하는 <br />
+                사역의 동역자로 여러분을 초대합니다.
               </IntroMessage>
             </InnerSection>
           </SectionContainer>

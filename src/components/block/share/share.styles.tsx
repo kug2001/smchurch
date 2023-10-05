@@ -20,7 +20,12 @@ export const SectionContainer = styled('div')((props: SectionProps) => {
     backgroundBlendMode: 'overlay',
     backgroundSize: 'cover',
     // backdropFilter: 'blur(1000px)',
-    backgroundColor: `${bgColor}`
+    backgroundColor: `${bgColor}`,
+    [mq]: {
+      [`&.cover`]: {
+        margin: '90px 0'
+      }
+    }
   };
 });
 
@@ -56,6 +61,9 @@ export const InnerSection = styled('div')`
   ${mq} {
     padding: 60px 20px;
     &.new_family {
+      padding: 60px 0;
+    }
+    &.album {
       padding: 60px 0;
     }
   }
