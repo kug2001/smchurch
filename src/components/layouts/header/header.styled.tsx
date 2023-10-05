@@ -3,7 +3,6 @@ import Link, { LinkProps } from 'next/link';
 import { PropsWithChildren } from 'react';
 import { usePathname } from 'next/navigation';
 import { mq } from '@/components/block/share/share.styles';
-import MenuIcon from '@mui/icons-material/Menu';
 import Image from 'next/image';
 
 export const DocHeader = styled('header')`
@@ -53,7 +52,7 @@ export const MenuList = styled('ul')`
     color: #5d4251;
   }
   ${mq} {
-    display: none;
+    visibility: hidden;
     flex-direction: column;
     position: absolute;
     top: 50px;
@@ -61,8 +60,14 @@ export const MenuList = styled('ul')`
     height: 200px;
     border-top: 1px solid #eee;
     background-color: #fff;
+    opacity: 0;
     &.active {
-      display: flex;
+      visibility: visible;
+      transition: opacity 0.3s ease-in-out;
+      opacity: 1;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+      -webkit-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+      -moz-box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
     }
     > li {
       display: block;
@@ -76,9 +81,16 @@ export const MenuList = styled('ul')`
   }
 `;
 
-export const Hamburger = styled(MenuIcon)`
+export const Hamburger = styled('button')`
   display: none;
   margin-right: 10px;
+  border: none;
+  background-color: transparent;
+  transition: all 0.5s ease-in-out;
+  &.active {
+    transform: rotate(90deg);
+    transition: all 0.5s ease-in-out;
+  }
   ${mq} {
     display: block;
   }
