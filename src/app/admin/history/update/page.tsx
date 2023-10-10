@@ -45,8 +45,8 @@ export default function NewFamilyUpdatePage() {
           <AddBtn onClick={handleGoHistory}>앨범 목록</AddBtn>
         </Title>
         <Description>
-          엘범을 수정합니다. 다만 이미지는 수정할 수 없습니다.(추후 업데이트
-          예정)
+          엘범을 제목을 수정합니다. 다만 이미지는 수정할 수 없습니다.(추후
+          업데이트 예정)
         </Description>
         <BookImgContainer>
           {data &&
@@ -70,7 +70,9 @@ export default function NewFamilyUpdatePage() {
               defaultValue={data?.title || ''}
             />
           </FieldBox>
-          <SubmitBtn>수정하기</SubmitBtn>
+          <div>
+            <SubmitBtn>수정하기</SubmitBtn>
+          </div>
         </FormContainer>
       </InnerContainer>
     </LocalLoader>

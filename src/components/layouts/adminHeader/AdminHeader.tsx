@@ -37,7 +37,9 @@ export const AdminHeader: FC<AdminHeaderProps> = props => {
     <DocHeader>
       <InnerHeader>
         <div>
-          <Title>제주서문교회 관리자 페이지</Title>
+          <a href={'/admin'} style={{ textDecoration: 'none' }}>
+            <Title>제주서문교회 관리자 페이지</Title>
+          </a>
         </div>
         {userInfo && (
           <div>

@@ -64,7 +64,9 @@ export default function NewFamilyUpdatePage() {
             defaultValue={params.get('date') || ''}
           />
         </FieldBox>
-        <SubmitBtn>정보 수정하기</SubmitBtn>
+        <div>
+          <SubmitBtn>정보 수정하기</SubmitBtn>
+        </div>
       </FormContainer>
     </InnerContainer>
   );

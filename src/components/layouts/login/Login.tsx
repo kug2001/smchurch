@@ -30,9 +30,6 @@ export const Login: FC = () => {
         user && setAuth(true);
       })
       .catch(() => {
-        // const errorCode = error.code;
-        // const errorMessage = error.message;
-        // console.log(errorCode, errorMessage);
         setAuth(false);
         window.alert('인증된 사용자가 아니거나, 비밀번호가 틀렸습니다.');
       });

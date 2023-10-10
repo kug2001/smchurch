@@ -62,7 +62,7 @@ export default function TestimonyAddPage() {
           <TextArea id="testimony" name="testimony" required={true} />
         </FieldBox>
         <FieldBox>
-          <Label htmlFor="imageFile">파일 업로드</Label>
+          <Label htmlFor="imageFile">사진 업로드</Label>
           <TextField
             id="imageFile"
             name="imageFile"
@@ -72,7 +72,9 @@ export default function TestimonyAddPage() {
             required={true}
           />
         </FieldBox>
-        <SubmitBtn>간증 등록하기</SubmitBtn>
+        <div>
+          <SubmitBtn>간증 등록하기</SubmitBtn>
+        </div>
       </FormContainer>
     </InnerContainer>
   );

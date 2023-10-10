@@ -93,7 +93,9 @@ export default function BoardUpdatePage() {
                 />
               </WrapEditor>
             </FieldBox>
-            <SubmitBtn>공지사항 수정하기</SubmitBtn>
+            <div>
+              <SubmitBtn>공지사항 수정하기</SubmitBtn>
+            </div>
           </FormContainer>
         </InnerContainer>
       )}

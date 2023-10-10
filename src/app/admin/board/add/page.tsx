@@ -73,7 +73,9 @@ export default function BoardAddPage() {
             <BoardEditor onChangeEditor={md => setMdContent(md)} />
           </WrapEditor>
         </FieldBox>
-        <SubmitBtn>공지사항 등록하기</SubmitBtn>
+        <div>
+          <SubmitBtn>공지사항 등록하기</SubmitBtn>
+        </div>
       </FormContainer>
     </InnerContainer>
   );

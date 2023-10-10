@@ -15,21 +15,29 @@ import { BaseSyntheticEvent, useState } from 'react';
 import { useHistoryBook } from '@/hooks/firebase/useHistoryBook';
 import { BookImg, BookImgContainer } from '@/app/admin/history/styles';
 import { useCloudinary } from '@/hooks/cloudinary/useCloudinary';
+import { LocalLoader } from '@/components/common/loader/LocalLoader';
 
 export default function HistoryBookAddPage() {
   const route = useRouter();
   const { addHistoryBook, uploadImg } = useHistoryBook();
+  const [isLoading, setIsLoading] = useState(false);
   const { getCloudImg } = useCloudinary();
   const [file, setFile] = useState(null);
   const [imgList, setImgList] = useState<any[]>([]);
   const handleNewFamily = () => route.back();
 
   const handleFileChange = async (e: BaseSyntheticEvent) => {
+    setIsLoading(true);
+    try {
+      const imgInfo = await uploadImg(e.target.files[0]);
+      setImgList(prevState => {
+        return [...prevState, { ...imgInfo }];
+      });
+      setIsLoading(false);
+    } catch {
+      setIsLoading(false);
+    }
     // console.log('imageFile', e.target.files[0]);
-    const imgInfo = await uploadImg(e.target.files[0]);
-    setImgList(prevState => {
-      return [...prevState, { ...imgInfo }];
-    });
   };
 
   const handleOnSubmit = async (e: BaseSyntheticEvent) => {
@@ -44,40 +52,44 @@ export default function HistoryBookAddPage() {
   };
 
   return (
-    <InnerContainer>
-      <Title>
-        엘범에 사진을 추가
-        <AddBtn onClick={handleNewFamily}>엘범 현황</AddBtn>
-      </Title>
-      <Description>엘범에 새로운 사진을 등록합니다.</Description>
-      <FieldBox>
-        <Label htmlFor="imageFile">사진 업로드</Label>
-        <TextField
-          id="imageFile"
-          name="imageFile"
-          type="file"
-          onChange={handleFileChange}
-          accept="image/png, image/jpeg, image/jpg"
-        />
-      </FieldBox>
-      <BookImgContainer>
-        {imgList.length > 0 &&
-          imgList.map((item, index) => (
-            <BookImg
-              key={index}
-              cldImg={getCloudImg(item.public_id)}
-              width={200}
-              height={150}
-            />
-          ))}
-      </BookImgContainer>
-      <FormContainer onSubmit={e => handleOnSubmit(e)}>
+    <LocalLoader isLoading={isLoading}>
+      <InnerContainer>
+        <Title>
+          엘범에 사진을 추가
+          <AddBtn onClick={handleNewFamily}>엘범 현황</AddBtn>
+        </Title>
+        <Description>엘범에 새로운 사진을 등록합니다.</Description>
         <FieldBox>
-          <Label htmlFor="title">사진 타이틀</Label>
-          <TextField id="title" name="title" type="text" required={true} />
+          <Label htmlFor="imageFile">사진 업로드</Label>
+          <TextField
+            id="imageFile"
+            name="imageFile"
+            type="file"
+            onChange={handleFileChange}
+            accept="image/png, image/jpeg, image/jpg"
+          />
         </FieldBox>
-        <SubmitBtn>엘범 등록하기</SubmitBtn>
-      </FormContainer>
-    </InnerContainer>
+        <BookImgContainer>
+          {imgList.length > 0 &&
+            imgList.map((item, index) => (
+              <BookImg
+                key={index}
+                cldImg={getCloudImg(item.public_id)}
+                width={200}
+                height={150}
+              />
+            ))}
+        </BookImgContainer>
+        <FormContainer onSubmit={e => handleOnSubmit(e)}>
+          <FieldBox>
+            <Label htmlFor="title">사진 타이틀</Label>
+            <TextField id="title" name="title" type="text" required={true} />
+          </FieldBox>
+          <div>
+            <SubmitBtn>엘범 등록하기</SubmitBtn>
+          </div>
+        </FormContainer>
+      </InnerContainer>
+    </LocalLoader>
   );
 }

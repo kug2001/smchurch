@@ -6,6 +6,7 @@ import {
 
 interface LocalLoaderProps {
   isLoading: boolean;
+  bgColor?: string;
 }
 
 export const LocalLoader: FC<PropsWithChildren<LocalLoaderProps>> = props => {

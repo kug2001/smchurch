@@ -57,7 +57,7 @@ export default function NewFamilyAddPage() {
           <TextField id="date" name="date" type="date" required={true} />
         </FieldBox>
         <FieldBox>
-          <Label htmlFor="imageFile">파일 업로드</Label>
+          <Label htmlFor="imageFile">사진 업로드</Label>
           <TextField
             id="imageFile"
             name="imageFile"
@@ -67,7 +67,9 @@ export default function NewFamilyAddPage() {
             required={true}
           />
         </FieldBox>
-        <SubmitBtn>새신자 등록하기</SubmitBtn>
+        <div>
+          <SubmitBtn>새신자 등록하기</SubmitBtn>
+        </div>
       </FormContainer>
     </InnerContainer>
   );

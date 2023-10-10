@@ -88,7 +88,9 @@ export default function TestimonyUpdatePage() {
               defaultValue={data.testimony || ''}
             />
           </FieldBox>
-          <SubmitBtn>간증 수정하기</SubmitBtn>
+          <div>
+            <SubmitBtn>간증 수정하기</SubmitBtn>
+          </div>
         </FormContainer>
       </InnerContainer>
     )

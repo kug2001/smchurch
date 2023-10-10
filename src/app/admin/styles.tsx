@@ -110,8 +110,12 @@ export const TextArea = styled('textarea')`
 `;
 
 export const SubmitBtn = styled('button')`
-  padding: 20px 20px;
+  padding: 10px 20px;
   font-size: 20px;
+  color: #9c27b0;
+  border: 1px solid #9c27b0;
+  border-radius: 4px;
+  background-color: #fff;
 `;
 
 export const TableContainer = styled('div')``;
