@@ -8,16 +8,7 @@ import {
   PrevNextBtn,
   UnOrderList
 } from '@/components/common/Pagination/pagination.styles';
-
-interface PaginationProps {
-  totalCount: number;
-  pageNum: number;
-  pagePerItem: number;
-  handlePrev: (num: number) => void;
-  handleNext: (num: number) => void;
-  handlePage: (num: number) => void;
-  bundleSize?: number;
-}
+import { PaginationProps } from './types';
 
 export const Pagination: FC<PaginationProps> = props => {
   const {
