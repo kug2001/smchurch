@@ -32,6 +32,10 @@ export default function RootLayout({
       <head>
         <title>제주서문교회</title>
         <meta name="format-detection" content="telephone=no" />
+        <meta
+          name="naver-site-verification"
+          content="a2df1a2a5b23dc0e036881cd069ac4f3fa36f709"
+        />
       </head>
       <body className={inter.className}>
         <ModalProvider>
