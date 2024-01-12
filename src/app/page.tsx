@@ -94,7 +94,7 @@ export default function Index() {
             ref={testimonyRef}
           >
             <InnerSection>
-              <TitIntroPeople>제주 서문교회 사람을 소개합니다.</TitIntroPeople>
+              <TitIntroPeople>제주서문교회 가족을 소개합니다.</TitIntroPeople>
               <WrapPeopleContainer>
                 <PeopleContainer
                   variants={container}
