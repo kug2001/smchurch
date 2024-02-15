@@ -53,7 +53,7 @@ export default function BoardPage() {
 
   const handleOnClickMoreBtn = async () => {
     // console.log(bandReqUrl.current);
-    setIsMoreLoading(true);
+    // setIsMoreLoading(true);
     try {
       const res = await fetch(
         `/api/band/posts?${bandReqUrl.current.toString()}`
@@ -67,10 +67,10 @@ export default function BoardPage() {
       bandReqUrl.current.delete('after');
       bandReqUrl.current.set('limit', paging.next_params.limit);
       bandReqUrl.current.set('after', paging.next_params.after);
-      setIsMoreLoading(false);
+      // setIsMoreLoading(false);
     } catch (e) {
       console.log(e);
-      setIsMoreLoading(false);
+      // setIsMoreLoading(false);
     }
   };
 
