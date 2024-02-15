@@ -14,7 +14,7 @@ import {
 } from '@/app/board/Board.styles';
 import { Button } from '@/components/common/button/Button';
 import { useHistoryBook } from '@/hooks/firebase/useHistoryBook';
-import { HistoryImg, HistoryImgContainer } from '@/app/album/album.styles';
+import { HistoryImg, HistoryImgContainer } from '@/app/family/album.styles';
 import { useCloudinary } from '@/hooks/cloudinary/useCloudinary';
 
 export interface HistoryData {
