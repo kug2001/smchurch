@@ -24,34 +24,19 @@ export default function BoardPage() {
   // const [limit, setLimit] = useState(20);
   const [isMoreLoading, setIsMoreLoading] = useState(true);
   const [bandPosts, setBandPosts] = useState<any[]>([]);
-  const bandReqUrl = useRef(
-    new URL(`${window.location.origin}/api/band/posts`)
-  );
-
-  // const { data, isLoading: isLoadingBand } = useSWR<any>('bandPosts', () =>
-  //   fetch(bandReqUrl.current).then(async res => {
-  //     const data = await res.json();
-  //     return data.result_data;
-  //   })
-  // );
+  const bandReqUrl = useRef(new URLSearchParams());
 
   useEffect(() => {
     // console.log('useEffect');
-    fetch(bandReqUrl.current).then(async res => {
+    fetch(`/api/band/posts`).then(async res => {
       const json = await res.json();
       const data = json.result_data;
 
       setBandPosts([...data.items]);
-      bandReqUrl.current.searchParams.delete('limit');
-      bandReqUrl.current.searchParams.delete('after');
-      bandReqUrl.current.searchParams.set(
-        'limit',
-        data.paging.next_params.limit
-      );
-      bandReqUrl.current.searchParams.set(
-        'after',
-        data.paging.next_params.after
-      );
+      bandReqUrl.current.delete('limit');
+      bandReqUrl.current.delete('after');
+      bandReqUrl.current.set('limit', data.paging.next_params.limit);
+      bandReqUrl.current.set('after', data.paging.next_params.after);
       setIsMoreLoading(false);
     });
   }, []);
@@ -70,16 +55,18 @@ export default function BoardPage() {
     // console.log(bandReqUrl.current);
     setIsMoreLoading(true);
     try {
-      const res = await fetch(bandReqUrl.current);
+      const res = await fetch(
+        `/api/band/posts?${bandReqUrl.current.toString()}`
+      );
       const json = await res.json();
       const paging = json.result_data.paging;
       setBandPosts(prevState => {
         return [...prevState, ...json.result_data.items];
       });
-      bandReqUrl.current.searchParams.delete('limit');
-      bandReqUrl.current.searchParams.delete('after');
-      bandReqUrl.current.searchParams.set('limit', paging.next_params.limit);
-      bandReqUrl.current.searchParams.set('after', paging.next_params.after);
+      bandReqUrl.current.delete('limit');
+      bandReqUrl.current.delete('after');
+      bandReqUrl.current.set('limit', paging.next_params.limit);
+      bandReqUrl.current.set('after', paging.next_params.after);
       setIsMoreLoading(false);
     } catch (e) {
       console.log(e);
