@@ -5,188 +5,142 @@ import {
 } from '@/components/block/share/share.styles';
 import {
   BoardTitle,
-  BodyTr,
-  CellLink,
-  HeadTr,
   ListContainer,
-  ListInfo,
-  ListInfoBox,
-  ListLink,
   ListTitle,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  THead,
-  TotalCount,
-  Br,
-  FamilyContainer,
-  FamilyMsg,
-  FamilyTitle
+  ListInfoBox,
+  WrapProfile,
+  ProfileImage,
+  ProfileName,
+  ProfileInfo,
+  MoreBtn,
+  WrapMore
 } from '@/app/board/Board.styles';
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable
-} from '@tanstack/react-table';
-import { BoardData } from '@/app/admin/board/page';
-import { useBoard } from '@/hooks/firebase/useBoard';
-import { useRouter } from 'next/navigation';
-import useSWR from 'swr';
 import { LocalLoader } from '@/components/common/loader/LocalLoader';
-import React, { useEffect, useState } from 'react';
-import { Pagination } from '@/components/common/Pagination/Pagination';
-import useResize from '@/hooks/browser/useResize';
-import { slice } from 'ramda';
-import { SwiperModule } from '@/components/block/swiper/SwiperModule';
-import { FamilyData } from '@/app/admin/new-family/page';
-import { useNewFamily } from '@/hooks/firebase/useNewFamily';
+import React, { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 // import { ContentBlock, EditorState, RichUtils } from 'draft-js';
 
-const columnHelper = createColumnHelper<BoardData>();
-
 export default function BoardPage() {
-  const { getBoard } = useBoard();
-  const { getNewFamily } = useNewFamily();
-  const route = useRouter();
-  const [pageNum, setPageNum] = useState(1);
-  const [pagePerItem, setPagePerItem] = useState(10);
-  const [tableData, setTableData] = useState<any[]>([]);
-  const { data: boardData, isLoading: isLoadingBoard } = useSWR(
-    'board',
-    getBoard
+  // const [limit, setLimit] = useState(20);
+  const [isMoreLoading, setIsMoreLoading] = useState(true);
+  const [bandPosts, setBandPosts] = useState<any[]>([]);
+  const bandReqUrl = useRef(
+    new URL(`${window.location.origin}/api/band/posts`)
   );
-  const { data: familyData, isLoading: isLoadingFamily } = useSWR<FamilyData[]>(
-    'newFamily',
-    getNewFamily
-  );
-  const { width } = useResize();
-  const [totalCount, setTotalCount] = useState(0);
 
-  const columns = [
-    columnHelper.accessor('category', {
-      header: () => <span>유형</span>,
-      cell: info => info.getValue()
-    }),
-    columnHelper.accessor('title', {
-      header: () => <span>제목</span>,
-      cell: info => (
-        <CellLink href={`/board/${info.row.original.idx}`}>
-          <span>{info.getValue()}</span>
-        </CellLink>
-      )
-    }),
-    columnHelper.accessor('createDate', {
-      header: () => <span>생성일</span>,
-      cell: info => info.getValue()
-    })
-  ];
-
-  const table = useReactTable({
-    data: tableData,
-    columns,
-    getCoreRowModel: getCoreRowModel()
-  });
+  // const { data, isLoading: isLoadingBand } = useSWR<any>('bandPosts', () =>
+  //   fetch(bandReqUrl.current).then(async res => {
+  //     const data = await res.json();
+  //     return data.result_data;
+  //   })
+  // );
 
   useEffect(() => {
-    if (boardData) {
-      setTableData(boardData);
-    }
-  }, [boardData]);
+    // console.log('useEffect');
+    fetch(bandReqUrl.current).then(async res => {
+      const json = await res.json();
+      const data = json.result_data;
 
-  useEffect(() => {
-    if (boardData) {
-      const start = (pageNum - 1) * pagePerItem;
-      const end = pageNum * pagePerItem;
-      const data = slice(start, end, boardData);
-      setTableData(data);
+      setBandPosts([...data.items]);
+      bandReqUrl.current.searchParams.delete('limit');
+      bandReqUrl.current.searchParams.delete('after');
+      bandReqUrl.current.searchParams.set(
+        'limit',
+        data.paging.next_params.limit
+      );
+      bandReqUrl.current.searchParams.set(
+        'after',
+        data.paging.next_params.after
+      );
+      setIsMoreLoading(false);
+    });
+  }, []);
+  const getDate = (uto: string) => {
+    const dateInstance = new Date(uto);
+    const year = dateInstance.getFullYear();
+    const month = dateInstance.getMonth();
+    const day = dateInstance.getDay();
+    const date = dateInstance.getDate();
+    const hour = dateInstance.getHours();
+    const minutes = dateInstance.getMinutes();
+    return `${year}년 ${month}월 ${date}일 ${hour}:${minutes}`;
+  };
+
+  const handleOnClickMoreBtn = async () => {
+    // console.log(bandReqUrl.current);
+    setIsMoreLoading(true);
+    try {
+      const res = await fetch(bandReqUrl.current);
+      const json = await res.json();
+      const paging = json.result_data.paging;
+      setBandPosts(prevState => {
+        return [...prevState, ...json.result_data.items];
+      });
+      bandReqUrl.current.searchParams.delete('limit');
+      bandReqUrl.current.searchParams.delete('after');
+      bandReqUrl.current.searchParams.set('limit', paging.next_params.limit);
+      bandReqUrl.current.searchParams.set('after', paging.next_params.after);
+      setIsMoreLoading(false);
+    } catch (e) {
+      console.log(e);
+      setIsMoreLoading(false);
     }
-  }, [pageNum, pagePerItem]);
+  };
 
   return (
-    <LocalLoader isLoading={isLoadingBoard && isLoadingFamily}>
+    <LocalLoader isLoading={isMoreLoading}>
       <SectionContainer bgColor={'#fff'} style={{ minHeight: 'inherit' }}>
         <InnerSection>
           <BoardTitle>서문교회 소식</BoardTitle>
-          <TotalCount>전체 {boardData && boardData.length}</TotalCount>
           <ListContainer>
-            {boardData &&
-              boardData.map(({ idx, category, title, createDate }) => (
-                <li key={idx}>
-                  <ListLink href={`/board/${idx}`}>
-                    <ListTitle>{title}</ListTitle>
+            {bandPosts &&
+              // @ts-ignore
+              bandPosts.map((item, index) => (
+                <li key={item.post_key}>
+                  <WrapProfile>
+                    {item.author.profile_image_url ? (
+                      <ProfileImage
+                        src={item.author.profile_image_url}
+                        alt={'작성자 프로필 사진'}
+                        width={50}
+                        height={50}
+                      />
+                    ) : (
+                      <></>
+                    )}
+                    <div>
+                      <ProfileName>{item.author.name}</ProfileName>
+                      <ProfileInfo>{getDate(item.created_at)}</ProfileInfo>
+                    </div>
+                  </WrapProfile>
+                  <ListTitle
+                    dangerouslySetInnerHTML={{ __html: item.content }}
+                  />
+                  {item?.photos[0]?.url && (
                     <ListInfoBox>
-                      <ListInfo>{category}</ListInfo>
-                      <ListInfo>{createDate}</ListInfo>
+                      <Image
+                        src={item?.photos[0]?.url}
+                        alt={''}
+                        // width={400}
+                        // height={300}
+                        fill={true}
+                        style={{ objectFit: 'contain' }}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
                     </ListInfoBox>
-                  </ListLink>
+                  )}
                 </li>
               ))}
           </ListContainer>
-          <TableContainer>
-            <Table>
-              <THead>
-                {table.getHeaderGroups().map(headerGroup => (
-                  <HeadTr key={headerGroup.id}>
-                    {headerGroup.headers.map(header => (
-                      <Th key={header.id} className={'board'}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                      </Th>
-                    ))}
-                  </HeadTr>
-                ))}
-              </THead>
-              <Tbody>
-                {table.getRowModel().rows.map(row => (
-                  <BodyTr key={row.id}>
-                    {row.getVisibleCells().map(cell => (
-                      <Td key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </Td>
-                    ))}
-                  </BodyTr>
-                ))}
-              </Tbody>
-            </Table>
-          </TableContainer>
-          <Pagination
-            totalCount={boardData ? boardData.length : 0}
-            pageNum={pageNum}
-            pagePerItem={pagePerItem}
-            bundleSize={width > 768 ? 10 : 5}
-            handlePage={num => setPageNum(num)}
-            handleNext={num => setPageNum(num)}
-            handlePrev={num => setPageNum(num)}
-          />
-        </InnerSection>
-      </SectionContainer>
-      <SectionContainer bgColor={'#7d5d6022'} style={{ minHeight: 'inherit' }}>
-        <InnerSection className={'new_family'}>
-          <FamilyContainer>
-            <h2 className="screen_out">새가족 안내</h2>
-            <FamilyTitle>새가족 안내</FamilyTitle>
-            <FamilyMsg>
-              예수님의 사랑으로 여러분을 환영합니다. <Br />
-              제주서문교회의 동역자가 되시기를 원하시는 분은
-              <Br className={'mo'} />
-              새가족부의 안내를 받으실 수 있습니다.
-              <Br />
-              새가족 등록 후 5주 간에 새가족공부를 마친 후{' '}
-              <Br className={'mo'} />
-              제주서문교회 공동체의 일원이 될 수 있습니다.
-            </FamilyMsg>
-          </FamilyContainer>
-          {familyData && <SwiperModule data={familyData} />}
+          <WrapMore>
+            <MoreBtn
+              onClick={handleOnClickMoreBtn}
+              variant={'outlined'}
+              color={'secondary'}
+            >
+              더보기
+            </MoreBtn>
+          </WrapMore>
         </InnerSection>
       </SectionContainer>
     </LocalLoader>
