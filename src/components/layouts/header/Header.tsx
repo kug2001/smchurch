@@ -55,8 +55,8 @@ export const Header: FC = () => {
     },
     {
       idx: 3,
-      menuName: '공동체 엘범',
-      linkUrl: '/album'
+      menuName: '새가족 안내',
+      linkUrl: '/family'
     },
     {
       idx: 4,

@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import Link from 'next/link';
 import { mq } from '@/components/block/share/share.styles';
+import Image from 'next/image';
+import { Button } from '@mui/material';
 
 export const BoardTitle = styled('strong')`
   display: inline-block;
@@ -90,13 +92,13 @@ export const Th = styled('th')`
   padding: 20px 10px;
   font-weight: 600;
   &:nth-of-type(1) {
-    width: 10%;
+    //width: 10%;
   }
   &:nth-of-type(2) {
-    width: 70%;
+    //width: 70%;
   }
   &:nth-of-type(3) {
-    width: 20%;
+    //width: 20%;
   }
 `;
 
@@ -130,7 +132,9 @@ export const CellLink = styled(Link)`
 `;
 
 export const ListContainer = styled('ul')`
-  display: none;
+  display: block;
+  max-width: 800px;
+  margin: auto;
   ${mq} {
     display: block;
   }
@@ -143,6 +147,29 @@ export const ListContainer = styled('ul')`
   }
 `;
 
+export const WrapProfile = styled('div')`
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 16px;
+`;
+
+export const ProfileImage = styled(Image)`
+  margin-right: 8px;
+  border-radius: 50%;
+`;
+
+export const ProfileName = styled('span')`
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+`;
+
+export const ProfileInfo = styled('span')`
+  display: block;
+  font-weight: 400;
+  color: #919191;
+`;
+
 export const ListLink = styled(Link)`
   text-decoration: none;
 `;
@@ -150,14 +177,21 @@ export const ListLink = styled(Link)`
 export const ListTitle = styled('strong')`
   display: flex;
   font-size: 16px;
-  letter-spacing: -0.2px;
+  line-height: 24px;
   color: #333;
   align-items: center;
+  margin-bottom: 16px;
 `;
 
 export const ListInfoBox = styled('div')`
-  margin-top: 11px;
-  font-size: 0;
+  position: relative;
+  width: 33vw;
+  height: 50vh;
+  margin: auto;
+  ${mq} {
+    width: 80vw;
+    height: 80vw;
+  }
 `;
 
 export const ListInfo = styled('span')`
@@ -174,6 +208,16 @@ export const ListInfo = styled('span')`
       content: '';
     }
   }
+`;
+
+export const WrapMore = styled('div')`
+  display: flex;
+  justify-content: center;
+  padding: 16px;
+`;
+export const MoreBtn = styled(Button)`
+  //  display: flex;
+  //  justify-content: center;
 `;
 
 export const FamilyContainer = styled('div')`
