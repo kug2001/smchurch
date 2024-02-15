@@ -185,11 +185,10 @@ export const ListTitle = styled('strong')`
 
 export const ListInfoBox = styled('div')`
   position: relative;
-  width: 33vw;
-  height: 50vh;
+  width: 90%;
+  height: 40vh;
   margin: auto;
   ${mq} {
-    width: 80vw;
     height: 80vw;
   }
 `;
