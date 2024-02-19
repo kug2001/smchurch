@@ -257,3 +257,26 @@ export const Br = styled('br')`
     }
   }
 `;
+
+export const WrapSwiper = styled('div')`
+  //position: relative;
+  .swiper-pagination-bullet {
+    background: #000;
+    //opacity: 0.5;
+  }
+
+  .swiper-pagination-bullet-active {
+    background: #fff;
+  }
+`;
+
+export const InnerSwiperSlide = styled('div')`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  ${mq} {
+    height: 60vw;
+  }
+  height: 15vw;
+`;
