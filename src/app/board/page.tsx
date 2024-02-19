@@ -3,21 +3,28 @@ import {
   InnerSection,
   SectionContainer
 } from '@/components/block/share/share.styles';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import {
   BoardTitle,
   ListContainer,
   ListTitle,
-  ListInfoBox,
   WrapProfile,
   ProfileImage,
   ProfileName,
   ProfileInfo,
   MoreBtn,
-  WrapMore
+  WrapMore,
+  WrapSwiper,
+  InnerSwiperSlide
 } from '@/app/board/Board.styles';
 import { LocalLoader } from '@/components/common/loader/LocalLoader';
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+
 // import { ContentBlock, EditorState, RichUtils } from 'draft-js';
 
 export default function BoardPage() {
@@ -74,6 +81,8 @@ export default function BoardPage() {
     }
   };
 
+  // console.log(bandPosts);
+
   return (
     <LocalLoader isLoading={isMoreLoading}>
       <SectionContainer bgColor={'#fff'} style={{ minHeight: 'inherit' }}>
@@ -103,19 +112,28 @@ export default function BoardPage() {
                   <ListTitle
                     dangerouslySetInnerHTML={{ __html: item.content }}
                   />
-                  {item?.photos[0]?.url && (
-                    <ListInfoBox>
-                      <Image
-                        src={item?.photos[0]?.url}
-                        alt={''}
-                        // width={400}
-                        // height={300}
-                        fill={true}
-                        style={{ objectFit: 'contain' }}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                    </ListInfoBox>
-                  )}
+                  <WrapSwiper>
+                    <Swiper
+                      modules={[Pagination]}
+                      spaceBetween={50}
+                      loop={true}
+                      pagination={{ clickable: true }}
+                    >
+                      {item?.photos.map((photo: any) => (
+                        <SwiperSlide key={photo.photo_key}>
+                          <InnerSwiperSlide>
+                            <Image
+                              src={photo.url}
+                              alt={''}
+                              fill={true}
+                              style={{ objectFit: 'contain' }}
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                          </InnerSwiperSlide>
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </WrapSwiper>
                 </li>
               ))}
           </ListContainer>
