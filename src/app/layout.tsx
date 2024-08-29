@@ -5,6 +5,7 @@ import RootStyleRegistry from '@/components/provider/RootStyleRegistry';
 import { FirebaseProvider } from '@/components/provider/FirebaseProvider';
 import { FirebaseOptions } from 'firebase/app';
 import { ModalProvider } from '@/components/provider/ModalProvider';
+import { Analytics } from '@vercel/analytics/react';
 
 const inter = Nanum_Gothic({
   weight: ['400', '700', '800'],
@@ -43,6 +44,7 @@ export default function RootLayout({
             <RootStyleRegistry>{children}</RootStyleRegistry>
           </FirebaseProvider>
         </ModalProvider>
+        <Analytics />
       </body>
     </html>
   );
