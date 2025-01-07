@@ -32,7 +32,7 @@ export const SwiperModule: FC<SwiperModuleProps> = props => {
         centeredSlides={true}
         spaceBetween={50}
         slidesPerView={width > 786 ? 3 : 1}
-        loop={true}
+        loop={false}
         navigation
       >
         {reverse(data).map(({ idx, name, date, publicId }) => (
