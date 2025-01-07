@@ -55,7 +55,7 @@ export default function BoardPage() {
     const date = dateInstance.getDate();
     const hour = dateInstance.getHours();
     const minutes = dateInstance.getMinutes();
-    return `${year}년 ${month}월 ${date}일 ${hour}:${minutes}`;
+    return `${year}년 ${month + 1}월 ${date}일 ${hour}:${minutes}`;
   };
 
   const handleOnClickMoreBtn = async () => {
