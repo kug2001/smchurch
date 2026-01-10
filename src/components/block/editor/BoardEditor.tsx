@@ -5,6 +5,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { editorOptions } from '@/components/block/editor/options';
 
 export interface BoardEditorProps {
+  // eslint-disable-next-line unused-imports/no-unused-vars
   onChangeEditor: (mdContent: string) => void;
   initMdContent?: string;
 }

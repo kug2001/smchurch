@@ -8,8 +8,11 @@ declare module 'scroll-out' {
     onHidden?: TargetEventCallback;
     onShown?: TargetEventCallback;
     onScroll?: (
+      // eslint-disable-next-line unused-imports/no-unused-vars
       el: HTMLElement,
+      // eslint-disable-next-line unused-imports/no-unused-vars
       scrollingElementCtx: ScrollingElementContext,
+      // eslint-disable-next-line unused-imports/no-unused-vars
       ctx: ElementContext[]
     ) => void;
     once?: false;
@@ -20,13 +23,19 @@ declare module 'scroll-out' {
   }
 
   export type TargetEventCallback = (
+    // eslint-disable-next-line unused-imports/no-unused-vars
     el: HTMLElement,
+    // eslint-disable-next-line unused-imports/no-unused-vars
     ctx: ElementContext,
+    // eslint-disable-next-line unused-imports/no-unused-vars
     doc: HTMLElement
   ) => void;
   export type ValueProvider<T> = (
+    // eslint-disable-next-line unused-imports/no-unused-vars
     el: HTMLElement,
+    // eslint-disable-next-line unused-imports/no-unused-vars
     ctx: ElementContext,
+    // eslint-disable-next-line unused-imports/no-unused-vars
     doc: HTMLElement
   ) => T;
   export type ValueOrProvider<T extends string | number> = T | ValueProvider<T>;
@@ -77,6 +86,7 @@ declare module 'scroll-out' {
   }
 
   export interface ScrollOut {
+    // eslint-disable-next-line unused-imports/no-unused-vars
     (options: IScrollOutOptions): ScrollOut;
   }
 

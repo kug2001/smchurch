@@ -29,8 +29,8 @@ export const useBoard = () => {
     return pipe(values, list => list.reverse())(data);
   };
 
-  const getBoardPagination = async (id: string, pagePerItem: number) => {
-    const snapshot = await paginationDbData('/board', id, pagePerItem);
+  const getBoardPagination = async () => {
+    const snapshot = await paginationDbData('/board');
     const data = await snapshot.val();
     console.log(values(data));
   };

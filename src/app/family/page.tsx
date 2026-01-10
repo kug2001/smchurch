@@ -15,13 +15,11 @@ import {
   FamilyMsg,
   FamilyTitle
 } from '@/app/board/Board.styles';
-import { createColumnHelper } from '@tanstack/react-table';
-import { BoardData } from '@/app/admin/board/page';
 import { SwiperModule } from '@/components/block/swiper/SwiperModule';
 import { FamilyData } from '@/app/admin/new-family/page';
 import { useNewFamily } from '@/hooks/firebase/useNewFamily';
 
-const columnHelper = createColumnHelper<BoardData>();
+// const columnHelper = createColumnHelper<BoardData>();
 export default function NewFamilyPage() {
   const { getNewFamily } = useNewFamily();
 

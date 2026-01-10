@@ -35,7 +35,7 @@ export const useDatabase = () => {
     return get(child(dbRef(db), path));
   };
 
-  const paginationDbData = (path: string, id: string, size: number) => {
+  const paginationDbData = (path: string) => {
     return get(
       query(
         child(dbRef(db), path),

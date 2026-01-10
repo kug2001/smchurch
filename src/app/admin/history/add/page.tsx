@@ -22,7 +22,7 @@ export default function HistoryBookAddPage() {
   const { addHistoryBook, uploadImg } = useHistoryBook();
   const [isLoading, setIsLoading] = useState(false);
   const { getCloudImg } = useCloudinary();
-  const [file, setFile] = useState(null);
+  // const [file, setFile] = useState(null);
   const [imgList, setImgList] = useState<any[]>([]);
   const handleNewFamily = () => route.back();
 

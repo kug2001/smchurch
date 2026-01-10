@@ -19,7 +19,6 @@ import {
   UpdateBtn
 } from '@/app/admin/styles';
 import { useRouter } from 'next/navigation';
-import { useCloudinary } from '@/hooks/cloudinary/useCloudinary';
 import React from 'react';
 import { LocalLoader } from '@/components/common/loader/LocalLoader';
 import {
@@ -34,7 +33,7 @@ const columnHelper = createColumnHelper<BoardData>();
 export default function NewFamilyPage() {
   const { getHistoryBook, deleteHistoryBook } = useHistoryBook();
   const route = useRouter();
-  const { getCloudImg } = useCloudinary();
+  // const { getCloudImg } = useCloudinary();
   const { data: tableData, isLoading } = useSWR('historyBook', getHistoryBook);
 
   const handleAddHistoryBook = () => route.push('/admin/history/add');

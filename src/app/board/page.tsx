@@ -51,7 +51,7 @@ export default function BoardPage() {
     const dateInstance = new Date(uto);
     const year = dateInstance.getFullYear();
     const month = dateInstance.getMonth();
-    const day = dateInstance.getDay();
+    // const day = dateInstance.getDay();
     const date = dateInstance.getDate();
     const hour = dateInstance.getHours();
     const minutes = dateInstance.getMinutes();
@@ -91,7 +91,7 @@ export default function BoardPage() {
           <ListContainer>
             {bandPosts &&
               // @ts-ignore
-              bandPosts.map((item, index) => (
+              bandPosts.map(item => (
                 <li key={item.post_key}>
                   <WrapProfile>
                     {item.author.profile_image_url ? (
