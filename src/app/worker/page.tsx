@@ -41,12 +41,12 @@ export default function WorkPage() {
       idx: 4,
       job: '시무장로',
       workers: ['송창선', '박용수', '오용태', '정원국']
-    },
-    {
-      idx: 5,
-      job: '교육 전도사',
-      workers: ['김종훈']
     }
+    // {
+    //   idx: 5,
+    //   job: '교육 전도사',
+    //   workers: ['']
+    // }
   ];
 
   return (

@@ -78,7 +78,7 @@ export default function Index() {
         <LocalLoader isLoading={isLoading}>
           <SectionContainer
             className={'cover'}
-            bgUrl={'/img/cover_bg_2025.jpeg'}
+            bgUrl={'/img/cover_bg_2026.jpeg'}
             bgColor={'#ffffff11'}
             style={{ minHeight: 'inherit' }}
           >
