@@ -1,10 +1,10 @@
-/** @jsxImportSource @emotion/react */
 'use client';
 
 import { PropsWithChildren } from 'react';
-import { AdminMainContainer } from './adminLayout.styles';
 
 export default function AdminMainLayout(props: PropsWithChildren) {
   const { children } = props;
-  return <AdminMainContainer>{children}</AdminMainContainer>;
+  return (
+    <main className="pt-14 pl-56 min-h-screen bg-muted/20">{children}</main>
+  );
 }

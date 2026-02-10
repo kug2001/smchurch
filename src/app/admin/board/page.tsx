@@ -1,22 +1,15 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
-  InnerContainer,
-  Description,
-  Title,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  HeaderTr,
-  AddBtn,
-  UpdateBtn,
-  DeleteBtn,
   Table,
-  TableContainer,
-  BtnConsole
-} from '@/app/admin/styles';
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableCell,
+  TableRow
+} from '@/components/ui/table';
 import useSWR from 'swr';
 import { useBoard } from '@/hooks/firebase/useBoard';
 import {
@@ -26,7 +19,8 @@ import {
   flexRender
 } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
-import { LocalLoader } from '@/components/common/loader/LocalLoader';
+import { AdminLoader } from '@/components/admin/AdminLoader';
+import { Plus, Pencil, Trash2 } from 'lucide-react';
 
 export interface BoardData {
   idx: string;
@@ -59,28 +53,45 @@ export default function BoardPage() {
 
   const columns = [
     columnHelper.accessor('category', {
-      header: () => <span>유형</span>,
-      cell: info => info.getValue()
+      header: () => '유형',
+      cell: info => (
+        <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
+          {info.getValue()}
+        </span>
+      )
     }),
     columnHelper.accessor('title', {
-      header: () => <span>제목</span>,
-      cell: info => info.getValue()
+      header: () => '제목',
+      cell: info => (
+        <span className="font-medium text-left">{info.getValue()}</span>
+      )
     }),
     columnHelper.accessor('createDate', {
-      header: () => <span>생성일</span>,
-      cell: info => info.getValue()
+      header: () => '생성일',
+      cell: info => (
+        <span className="text-muted-foreground">{info.getValue()}</span>
+      )
     }),
     columnHelper.accessor('idx', {
-      header: () => <span>관리</span>,
+      header: () => '관리',
       cell: info => (
-        <BtnConsole>
-          <UpdateBtn onClick={() => handleUpdateBoard(info.getValue())}>
-            수정
-          </UpdateBtn>
-          <DeleteBtn onClick={() => handleDeleteBoard(info.getValue())}>
-            삭제
-          </DeleteBtn>
-        </BtnConsole>
+        <div className="flex gap-1.5 justify-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => handleUpdateBoard(info.getValue())}
+          >
+            <Pencil className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-destructive hover:text-destructive"
+            onClick={() => handleDeleteBoard(info.getValue())}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       )
     })
   ];
@@ -92,48 +103,78 @@ export default function BoardPage() {
   });
 
   return (
-    <LocalLoader isLoading={isLoading}>
-      <InnerContainer>
-        <Title>
-          서문교회 게시판 관리
-          <AddBtn onClick={handleAddBoard}>게시판 내용 추가</AddBtn>
-        </Title>
-        <Description>서문교회 게시판 관리합니다.</Description>
-        <TableContainer>
-          <Table>
-            <Thead>
-              {table.getHeaderGroups().map(headerGroup => (
-                <HeaderTr key={headerGroup.id}>
-                  {headerGroup.headers.map(header => (
-                    <Th key={header.id} className={'board'}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </Th>
+    <AdminLoader isLoading={isLoading}>
+      <div className="p-6 space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight">
+              게시판 관리
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              서문교회 게시판을 관리합니다.
+            </p>
+          </div>
+          <Button onClick={handleAddBoard}>
+            <Plus className="h-4 w-4 mr-1.5" />
+            게시물 추가
+          </Button>
+        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">게시물 목록</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="rounded-md border">
+              <Table>
+                <TableHeader>
+                  {table.getHeaderGroups().map(headerGroup => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map(header => (
+                        <TableHead key={header.id} className="text-center">
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
                   ))}
-                </HeaderTr>
-              ))}
-            </Thead>
-            <Tbody>
-              {table.getRowModel().rows.map(row => (
-                <Tr key={row.id}>
-                  {row.getVisibleCells().map(cell => (
-                    <Td key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Td>
-                  ))}
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </InnerContainer>
-    </LocalLoader>
+                </TableHeader>
+                <TableBody>
+                  {table.getRowModel().rows.length > 0 ? (
+                    table.getRowModel().rows.map(row => (
+                      <TableRow key={row.id}>
+                        {row.getVisibleCells().map(cell => (
+                          <TableCell
+                            key={cell.id}
+                            className="text-center align-middle"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={columns.length}
+                        className="h-24 text-center text-muted-foreground"
+                      >
+                        등록된 게시물이 없습니다.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </AdminLoader>
   );
 }

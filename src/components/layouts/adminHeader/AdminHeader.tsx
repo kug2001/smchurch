@@ -1,17 +1,11 @@
-/** @jsxImportSource @emotion/react */
 'use client';
 
 import React, { FC } from 'react';
-import {
-  DocHeader,
-  InnerHeader,
-  LogoutBtn,
-  Title,
-  UserTitle
-} from './adminHeader.styled';
 import { useAuth } from '@/hooks/firebase/useAuth';
 import { useAuthGuard } from '@/components/provider/GuardProvider';
 import { User } from '@firebase/auth';
+import { Button } from '@/components/ui/button';
+import { LogOut } from 'lucide-react';
 
 interface AdminHeaderProps {
   userInfo: User | null;
@@ -34,22 +28,25 @@ export const AdminHeader: FC<AdminHeaderProps> = props => {
   };
 
   return (
-    <DocHeader>
-      <InnerHeader>
-        <div>
-          <a href={'/admin'} style={{ textDecoration: 'none' }}>
-            <Title>제주서문교회 관리자 페이지</Title>
-          </a>
-        </div>
+    <header className="fixed left-0 right-0 h-14 px-6 bg-background border-b border-border shadow-sm z-[1000]">
+      <div className="flex justify-between items-center h-full mx-auto">
+        <a href={'/admin'} className="no-underline">
+          <span className="text-lg font-semibold text-foreground">
+            서문교회 관리자
+          </span>
+        </a>
         {userInfo && (
-          <div>
-            <UserTitle>{`${
-              userInfo.email?.split('@')[0]
-            }관리자님 환영합니다!`}</UserTitle>
-            <LogoutBtn onClick={handleLogout}>로그아웃</LogoutBtn>
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-muted-foreground">
+              {userInfo.email?.split('@')[0]}
+            </span>
+            <Button variant="ghost" size="sm" onClick={handleLogout}>
+              <LogOut className="h-4 w-4 mr-1.5" />
+              로그아웃
+            </Button>
           </div>
         )}
-      </InnerHeader>
-    </DocHeader>
+      </div>
+    </header>
   );
 };

@@ -1,6 +1,4 @@
-/** @jsxImportSource @emotion/react */
-'use client';
-
+import '@/assets/styles/admin-globals.css';
 import MainLayout from '@/components/layouts/mainLayout/MainLayout';
 import React from 'react';
 import { Header } from '@/components/layouts/header/Header';

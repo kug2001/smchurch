@@ -1,10 +1,7 @@
-/** @jsxImportSource @emotion/react */
 'use client';
 
 import { PropsWithChildren } from 'react';
-import { MainContainer } from './mainLayout.styles';
 
-export default function MainLayout(props: PropsWithChildren) {
-  const { children } = props;
-  return <MainContainer>{children}</MainContainer>;
+export default function MainLayout({ children }: PropsWithChildren) {
+  return <main className="pt-[72px] md:pt-20">{children}</main>;
 }

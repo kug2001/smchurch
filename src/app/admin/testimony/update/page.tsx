@@ -1,21 +1,16 @@
 'use client';
-import {
-  AddBtn,
-  Description,
-  FieldBox,
-  FormContainer,
-  InnerContainer,
-  Label,
-  SubmitBtn,
-  TextArea,
-  TextField,
-  Title
-} from '@/app/admin/styles';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTestimony } from '@/hooks/firebase/useTestimony';
 import { BaseSyntheticEvent } from 'react';
 import useSWR from 'swr';
 import { TestimonyPerson } from '@/app/admin/testimony/page';
+import { ArrowLeft } from 'lucide-react';
+import { AdminLoader } from '@/components/admin/AdminLoader';
 
 export default function TestimonyUpdatePage() {
   const route = useRouter();
@@ -27,10 +22,6 @@ export default function TestimonyUpdatePage() {
     'getTestimonyByIdx',
     getTestimonyByIdx(userIdx)
   );
-
-  console.log('data', data);
-
-  const handleNewFamily = () => route.push('/admin/testimony');
 
   const handleOnSubmit = (e: BaseSyntheticEvent, idx: string) => {
     e.preventDefault();
@@ -47,52 +38,74 @@ export default function TestimonyUpdatePage() {
     });
   };
 
-  if (isLoading && !data) return <>로딩중</>;
-  // @ts-ignore
-  // const { idx, name, job, testimony, imageUrl } = data;
+  if (isLoading && !data) return <AdminLoader isLoading={true} />;
   return (
     data && (
-      <InnerContainer>
-        <Title>
-          {`${data.name}${data.job} 간증 수정`}
-          <AddBtn onClick={handleNewFamily}>간증 등록 현황</AddBtn>
-        </Title>
-        <Description>간증자 정보를 수정 합니다.</Description>
-        <FormContainer onSubmit={e => handleOnSubmit(e, data.idx)}>
-          <FieldBox>
-            <Label htmlFor="name">이 름</Label>
-            <TextField
-              id="name"
-              name="name"
-              type="text"
-              required={true}
-              defaultValue={data.name || ''}
-            />
-          </FieldBox>
-          <FieldBox>
-            <Label htmlFor="job">직 분</Label>
-            <TextField
-              id="job"
-              name="job"
-              type="text"
-              required={true}
-              defaultValue={data.job || ''}
-            />
-          </FieldBox>
-          <FieldBox>
-            <Label htmlFor="testimony">간증문</Label>
-            <TextArea
-              id="testimony"
-              name="testimony"
-              required={true}
-              defaultValue={data.testimony || ''}
-            />
-          </FieldBox>
+      <div className="p-6 space-y-6">
+        <div className="flex items-center gap-4">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => route.push('/admin/testimony')}
+          >
+            <ArrowLeft className="h-4 w-4 mr-1" />
+            목록
+          </Button>
           <div>
-            <SubmitBtn>간증 수정하기</SubmitBtn>
+            <h1 className="text-2xl font-semibold tracking-tight">간증 수정</h1>
+            <p className="text-sm text-muted-foreground">
+              {data.name} {data.job}의 간증을 수정합니다.
+            </p>
           </div>
-        </FormContainer>
-      </InnerContainer>
+        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">간증 정보</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form
+              onSubmit={e => handleOnSubmit(e, data.idx)}
+              className="space-y-4"
+            >
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">이름</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    required
+                    defaultValue={data.name || ''}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="job">직분</Label>
+                  <Input
+                    id="job"
+                    name="job"
+                    type="text"
+                    required
+                    defaultValue={data.job || ''}
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="testimony">간증문</Label>
+                <Textarea
+                  id="testimony"
+                  name="testimony"
+                  required
+                  defaultValue={data.testimony || ''}
+                  className="min-h-[200px]"
+                />
+              </div>
+              <div className="flex justify-end">
+                <Button type="submit">간증 수정하기</Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     )
   );
 }

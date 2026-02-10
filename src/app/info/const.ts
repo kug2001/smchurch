@@ -17,11 +17,15 @@ export const tableInfoData: TableInfo[] = [
     colspan: 3,
     body: [
       [
-        { column: '주일예배', rowSpan: 2 },
+        { column: '주일오전예배', rowSpan: 2 },
         { column: '주일 오전 11시' },
         { column: '본당' }
       ],
-      [{ column: undefined }, { column: '주일 오후 2시' }, { column: '본당' }],
+      [
+        { column: '주일오후예배' },
+        { column: '주일 오후 2시' },
+        { column: '본당' }
+      ],
       [{ column: '새벽기도' }, { column: '새벽 5시 30분' }, { column: '본당' }],
       [
         { column: '수요예배' },
@@ -41,16 +45,13 @@ export const tableInfoData: TableInfo[] = [
     colspan: 3,
     body: [
       [
-        { column: '영유아부' },
-        { column: '주일 오전 9시' },
+        { column: '주일학교' },
+        { column: '주일 오전 9시 30분' },
         { column: '교육관' }
       ],
-      [{ column: '유치부' }, { column: '주일 오전 9시' }, { column: '교육관' }],
-      [{ column: '유년부' }, { column: '주일 오전 9시' }, { column: '교육관' }],
-      [{ column: '초등부' }, { column: '주일 오전 9시' }, { column: '교육관' }],
       [
         { column: '중고등부' },
-        { column: '주일 오전 9시' },
+        { column: '주일 오전 9시 30분' },
         { column: '교육관' }
       ],
       [{ column: '청년부' }, { column: '주일 오후 4시' }, { column: '교육관' }]

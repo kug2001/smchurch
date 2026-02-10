@@ -11,7 +11,7 @@ import React, {
 import { AdminHeader } from '@/components/layouts/adminHeader/AdminHeader';
 import { useAuth } from '@/hooks/firebase/useAuth';
 import { User } from '@firebase/auth';
-import { GlobalLoader } from '@/components/common/loader/GlobalLoader';
+import { AdminGlobalLoader } from '@/components/admin/AdminGlobalLoader';
 
 interface AuthContext {
   auth: boolean;
@@ -54,10 +54,10 @@ export const GuardProvider: FC<
 
   return (
     <authContext.Provider value={{ auth, setAuth }}>
-      <GlobalLoader isLoading={loading}>
+      <AdminGlobalLoader isLoading={loading}>
         <AdminHeader userInfo={userInfo} setUserInfo={setUserInfo} />
         {!auth ? loginPage : children}
-      </GlobalLoader>
+      </AdminGlobalLoader>
     </authContext.Provider>
   );
 };

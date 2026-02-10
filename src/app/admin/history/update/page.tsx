@@ -1,22 +1,16 @@
 'use client';
-import {
-  AddBtn,
-  Description,
-  FieldBox,
-  FormContainer,
-  InnerContainer,
-  Label,
-  SubmitBtn,
-  TextField,
-  Title
-} from '@/app/admin/styles';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { BaseSyntheticEvent } from 'react';
 import { useHistoryBook } from '@/hooks/firebase/useHistoryBook';
 import useSWR from 'swr';
-import { LocalLoader } from '@/components/common/loader/LocalLoader';
-import { BookImg, BookImgContainer } from '@/app/admin/history/styles';
+import { AdminLoader } from '@/components/admin/AdminLoader';
 import { useCloudinary } from '@/hooks/cloudinary/useCloudinary';
+import { AdvancedImage } from '@cloudinary/react';
+import { ArrowLeft } from 'lucide-react';
 
 export default function NewFamilyUpdatePage() {
   const route = useRouter();
@@ -25,8 +19,6 @@ export default function NewFamilyUpdatePage() {
   const { updateHistoryBook, getHistoryById } = useHistoryBook();
   const { getCloudImg } = useCloudinary();
   const { data, isLoading } = useSWR('historyById', getHistoryById(id));
-
-  const handleGoHistory = () => route.push('/admin/history');
 
   const handleOnSubmit = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
@@ -38,43 +30,67 @@ export default function NewFamilyUpdatePage() {
   };
 
   return (
-    <LocalLoader isLoading={isLoading}>
-      <InnerContainer>
-        <Title>
-          {params.get('name')} 엘범 수정
-          <AddBtn onClick={handleGoHistory}>앨범 목록</AddBtn>
-        </Title>
-        <Description>
-          엘범을 제목을 수정합니다. 다만 이미지는 수정할 수 없습니다.(추후
-          업데이트 예정)
-        </Description>
-        <BookImgContainer>
-          {data &&
-            data.imgList?.map((item: any, index: any) => (
-              <BookImg
-                key={index}
-                cldImg={getCloudImg(item.public_id)}
-                width={200}
-                height={150}
-              />
-            ))}
-        </BookImgContainer>
-        <FormContainer onSubmit={e => handleOnSubmit(e)}>
-          <FieldBox>
-            <Label htmlFor="title">엘범 이름</Label>
-            <TextField
-              id="title"
-              name="title"
-              type="text"
-              required={true}
-              defaultValue={data?.title || ''}
-            />
-          </FieldBox>
+    <AdminLoader isLoading={isLoading}>
+      <div className="p-6 space-y-6">
+        <div className="flex items-center gap-4">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => route.push('/admin/history')}
+          >
+            <ArrowLeft className="h-4 w-4 mr-1" />
+            목록
+          </Button>
           <div>
-            <SubmitBtn>수정하기</SubmitBtn>
+            <h1 className="text-2xl font-semibold tracking-tight">앨범 수정</h1>
+            <p className="text-sm text-muted-foreground">
+              이미지는 수정할 수 없습니다. (추후 업데이트 예정)
+            </p>
           </div>
-        </FormContainer>
-      </InnerContainer>
-    </LocalLoader>
+        </div>
+        {data?.imgList && data.imgList.length > 0 && (
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg">등록된 사진</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex gap-2 flex-wrap">
+                {data.imgList.map((item: any, index: any) => (
+                  <AdvancedImage
+                    key={index}
+                    cldImg={getCloudImg(item.public_id)}
+                    width={200}
+                    height={150}
+                    className="rounded-md object-cover"
+                  />
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        )}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">앨범 정보</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={e => handleOnSubmit(e)} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="title">앨범 이름</Label>
+                <Input
+                  id="title"
+                  name="title"
+                  type="text"
+                  required
+                  defaultValue={data?.title || ''}
+                />
+              </div>
+              <div className="flex justify-end">
+                <Button type="submit">수정하기</Button>
+              </div>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    </AdminLoader>
   );
 }

@@ -1,22 +1,14 @@
 'use client';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
-  InnerContainer,
-  Description,
-  Title,
-  Thead,
-  Tr,
-  Th,
-  Tbody,
-  Td,
-  HeaderTr,
-  FaceImage,
-  AddBtn,
-  UpdateBtn,
-  DeleteBtn,
   Table,
-  TableContainer,
-  BtnConsole
-} from '@/app/admin/styles';
+  TableHeader,
+  TableBody,
+  TableHead,
+  TableCell,
+  TableRow
+} from '@/components/ui/table';
 import useSWR from 'swr';
 import { useTestimony } from '@/hooks/firebase/useTestimony';
 import {
@@ -26,8 +18,10 @@ import {
   flexRender
 } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';
-import { LocalLoader } from '@/components/common/loader/LocalLoader';
+import { AdminLoader } from '@/components/admin/AdminLoader';
 import { useCloudinary } from '@/hooks/cloudinary/useCloudinary';
+import { AdvancedImage } from '@cloudinary/react';
+import { Plus, Pencil, Trash2 } from 'lucide-react';
 
 export interface TestimonyPerson {
   idx: string;
@@ -63,39 +57,57 @@ export default function TestimonyPage() {
 
   const columns = [
     columnHelper.accessor('publicId', {
-      header: () => <span>사진</span>,
+      header: () => '사진',
+      size: 90,
       cell: info => (
-        <FaceImage
+        <AdvancedImage
           //@ts-ignore
           cldImg={getCloudImg(info.getValue())}
-          width={80}
-          height={80}
+          width={72}
+          height={72}
+          className="rounded-md object-cover mx-auto"
         />
       )
     }),
     columnHelper.accessor('name', {
-      header: () => <span>이름</span>,
-      cell: info => info.getValue()
+      header: () => '이름',
+      size: 90,
+      cell: info => <span className="font-medium">{info.getValue()}</span>
     }),
     columnHelper.accessor('job', {
-      header: () => <span>직분</span>,
+      header: () => '직분',
+      size: 90,
       cell: info => info.getValue()
     }),
     columnHelper.accessor('testimony', {
-      header: () => <span>간증문</span>,
-      cell: info => info.getValue()
+      header: () => '간증문',
+      cell: info => (
+        <p className="text-left whitespace-pre-wrap break-words">
+          {info.getValue()}
+        </p>
+      )
     }),
     columnHelper.accessor('idx', {
-      header: () => <span>관리</span>,
+      header: () => '관리',
+      size: 100,
       cell: info => (
-        <BtnConsole>
-          <UpdateBtn onClick={() => handleUpdateTestimony(info.getValue())}>
-            수정
-          </UpdateBtn>
-          <DeleteBtn onClick={() => handleDeleteTestimony(info.getValue())}>
-            삭제
-          </DeleteBtn>
-        </BtnConsole>
+        <div className="flex gap-1.5 justify-center">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => handleUpdateTestimony(info.getValue())}
+          >
+            <Pencil className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-destructive hover:text-destructive"
+            onClick={() => handleDeleteTestimony(info.getValue())}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       )
     })
   ];
@@ -107,48 +119,86 @@ export default function TestimonyPage() {
   });
 
   return (
-    <LocalLoader isLoading={isLoading}>
-      <InnerContainer>
-        <Title>
-          성도 간증 관리
-          <AddBtn onClick={handleAddTestimony}>간증 추가</AddBtn>
-        </Title>
-        <Description>서문교회 성도들의 간증을 관리합니다.</Description>
-        <TableContainer>
-          <Table>
-            <Thead>
-              {table.getHeaderGroups().map(headerGroup => (
-                <HeaderTr key={headerGroup.id}>
-                  {headerGroup.headers.map(header => (
-                    <Th key={header.id} className={'testimony'}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </Th>
+    <AdminLoader isLoading={isLoading}>
+      <div className="p-6 space-y-6">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold tracking-tight">
+              성도 간증 관리
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              서문교회 성도들의 간증을 관리합니다.
+            </p>
+          </div>
+          <Button onClick={handleAddTestimony}>
+            <Plus className="h-4 w-4 mr-1.5" />
+            간증 추가
+          </Button>
+        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">간증 목록</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="rounded-md border">
+              <Table className="table-fixed w-full">
+                <TableHeader>
+                  {table.getHeaderGroups().map(headerGroup => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map(header => (
+                        <TableHead
+                          key={header.id}
+                          className="text-center"
+                          style={
+                            header.getSize() !== 150
+                              ? { width: `${header.getSize()}px` }
+                              : undefined
+                          }
+                        >
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                        </TableHead>
+                      ))}
+                    </TableRow>
                   ))}
-                </HeaderTr>
-              ))}
-            </Thead>
-            <Tbody>
-              {table.getRowModel().rows.map(row => (
-                <Tr key={row.id}>
-                  {row.getVisibleCells().map(cell => (
-                    <Td key={cell.id} className={'testimony'}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </Td>
-                  ))}
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </TableContainer>
-      </InnerContainer>
-    </LocalLoader>
+                </TableHeader>
+                <TableBody>
+                  {table.getRowModel().rows.length > 0 ? (
+                    table.getRowModel().rows.map(row => (
+                      <TableRow key={row.id}>
+                        {row.getVisibleCells().map(cell => (
+                          <TableCell
+                            key={cell.id}
+                            className="text-center align-middle"
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell
+                        colSpan={columns.length}
+                        className="h-24 text-center text-muted-foreground"
+                      >
+                        등록된 간증이 없습니다.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </AdminLoader>
   );
 }

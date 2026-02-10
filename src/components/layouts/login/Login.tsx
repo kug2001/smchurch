@@ -1,20 +1,19 @@
-/** @jsxImportSource @emotion/react */
 'use client';
 
 import { BaseSyntheticEvent, FC } from 'react';
-import {
-  InputBox,
-  Label,
-  LoginContainer,
-  LoginForm,
-  LoginTitle,
-  SubmitBox,
-  SubmitBtn,
-  TextField
-} from '@/components/layouts/login/login.styles';
 import { useAuth } from '@/hooks/firebase/useAuth';
 import { useAuthGuard } from '@/components/provider/GuardProvider';
 import MainLayout from '../mainLayout/MainLayout';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle
+} from '@/components/ui/card';
 
 export const Login: FC = () => {
   const { loginUser } = useAuth();
@@ -37,34 +36,40 @@ export const Login: FC = () => {
 
   return (
     <MainLayout>
-      <LoginContainer>
-        <LoginTitle>서문교회 관리자 로그인</LoginTitle>
-        <LoginForm onSubmit={e => handleOnSubmit(e)}>
-          <InputBox>
-            <Label htmlFor="id">E-mail</Label>
-            <TextField
-              id="id"
-              name="id"
-              type="email"
-              required={true}
-              autoComplete="username"
-            />
-          </InputBox>
-          <InputBox>
-            <Label htmlFor="password">비밀번호</Label>
-            <TextField
-              id="password"
-              name="password"
-              required={true}
-              type="password"
-              autoComplete="current-password"
-            />
-          </InputBox>
-          <SubmitBox>
-            <SubmitBtn>로그인</SubmitBtn>
-          </SubmitBox>
-        </LoginForm>
-      </LoginContainer>
+      <div className="flex min-h-[80vh] items-center justify-center">
+        <Card className="w-[380px]">
+          <CardHeader className="text-center">
+            <CardTitle className="text-xl">서문교회 관리자</CardTitle>
+            <CardDescription>관리자 계정으로 로그인하세요.</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={e => handleOnSubmit(e)} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="id">이메일</Label>
+                <Input
+                  id="id"
+                  name="id"
+                  type="email"
+                  placeholder="admin@example.com"
+                  required={true}
+                  autoComplete="username"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">비밀번호</Label>
+                <Input
+                  id="password"
+                  name="password"
+                  required={true}
+                  type="password"
+                  autoComplete="current-password"
+                />
+              </div>
+              <Button className="w-full">로그인</Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
     </MainLayout>
   );
 };

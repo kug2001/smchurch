@@ -1,6 +1,6 @@
-/** @jsxImportSource @emotion/react */
 'use client';
 
+import '@/assets/styles/admin-globals.css';
 import { Sidebar } from '@/components/layouts/sideBar/Sidebar';
 import { GuardProvider } from '@/components/provider/GuardProvider';
 import { Login } from '@/components/layouts/login/Login';
